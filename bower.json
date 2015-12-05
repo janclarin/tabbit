@@ -1,0 +1,24 @@
+{
+  "name": "tab",
+  "description": "Tab web app",
+  "main": "",
+  "authors": [
+    "Jan Clarin <jan@clarin.me>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/janclarin/tab-app",
+  "moduleType": [],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.6",
+    "angular": "~1.4.8",
+    "angular-route": "~1.4.8"
+  }
+}
