@@ -1,13 +1,18 @@
-// User model.
-var mongoose = require('mongoose'),
-    Schema = mongoose.Schema,
-    passportLocalMongoose = require('passport-local-mongoose');
+/**
+ * User model.
+ */
+'use strict';
 
-var User = new Schema({
-    username: String,
-    password: String
-});
-
-User.plugin(passportLocalMongoose);
-
-module.exports = mongoose.model('users', User);
+module.exports = function(sequelize, DataTypes) {
+    var User = sequelize.define('User', {
+        email: DataTypes.STRING,
+        username: DataTypes.STRING,
+        password: DataTypes.STRING
+    }, {
+        classMethods: {
+            associate: function(models) {
+            }
+        }
+    });
+    return User;
+};

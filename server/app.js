@@ -3,26 +3,24 @@ var express = require('express'),
     cookieParser = require('cookie-parser'),
     bodyParser = require('body-parser'),
     expressSession = require('express-session'),
-    mongoose = require('mongoose'),
     bcrypt = require('bcrypt-nodejs'),
     path = require('path'),
     passport = require('passport'),
     LocalStrategy = require('passport-local').Strategy;
 
-// Connect mongoose to DB.
-mongoose.connect('mongodb://localhost/tab');
+// Models.
+var User = require('./models/user');
 
-// User model.
-var User = require('./models/user.js');
+// Routes.
+var routes = require('./routes/index');
+var users = require('./routes/users');
 
 // Create Express instance.
 var app = express();
 
-// Require routes.
-var routes = require('./routes/api.js');
-
 // Define middleware.
 app.use(express.static(path.join(__dirname, '../client')));
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -32,21 +30,49 @@ app.use(require('express-session')({
     resave: false,
     saveUninitialized: false
 }));
-app.use(passport.initialize());
-app.use(passport.session());
-app.use(express.static(path.join(__dirname, 'public')));
 
 // Configure passport.
-passport.use(new LocalStrategy(User.authenticate()));
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(function(username, password, done) {
+    User.findOne({
+        where: {
+            username: username
+        }
+    })
+        .then(function(err, user) {
+            if (err) {
+                return done(err);
+            }
+            if (!user) {
+                console.log('Error.');
+                return done(null, false, { message: 'Incorrect username and/or password' });
+            }
+
+            var hashedPassword = bcrypt.hashSync(password, user.salt);
+
+            if (user.password === hashedPassword) {
+                return done(null, user);
+            }
+            return done(null, false, { message: 'Incorrect username and/or password' });
+        });
+}));
+passport.serializeUser(function(User, done) {
+    done(null, User.id);
+});
+passport.deserializeUser(function(id, done) {
+    User.findById(id)
+        .then(function(user) {
+            done(null, user);
+        })
+        .catch(function(e) {
+            done(e, false);
+        });
+});
 
 // Routes.
-app.use('/users/', routes);
-
-app.get('/', function(req, res) {
-    res.sendFile(path.join(__dirname, '../client', 'index.html'));
-});
+app.use('/', routes);
+app.use('/users', users);
 
 // Redirect to index if any other link than those above.
 //app.get('*', function(req, res) {
