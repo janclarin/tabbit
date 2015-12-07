@@ -16,25 +16,25 @@
         // Configure routes.
         $routeProvider
             .when('/', {
-                templateUrl: 'user/login.html',
+                templateUrl: 'auth/login.html',
                 controller: 'LoginController',
                 controllerAs: 'vm',
                 access: { restricted: false }
             })
             .when('/login', {
-                templateUrl: 'user/login.html',
+                templateUrl: 'auth/login.html',
                 controller: 'LoginController',
                 controllerAs: 'vm',
                 access: { restricted: false }
             })
             .when('/logout', {
-                templateUrl: 'user/logout.html',
+                templateUrl: 'auth/logout.html',
                 controller: 'LogoutController',
                 controllerAs: 'vm',
                 access: { restricted: false }
             })
             .when('/register', {
-                templateUrl: 'user/register.html',
+                templateUrl: 'auth/register.html',
                 controller: 'RegisterController',
                 controllerAs: 'vm',
                 access: { restricted: false }
