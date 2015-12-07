@@ -12,11 +12,16 @@
     "debug": "^2.2.0",
     "express": "^4.13.3",
     "express-session": "^1.12.1",
-    "mongoose": "^4.2.9",
     "morgan": "^1.6.1",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
-    "passport-local-mongoose": "^3.1.0",
+    "pg": "^4.4.3",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^3.14.2",
     "serve-favicon": "^2.3.0"
+  },
+  "devDependencies": {
+    "sequelize-cli": "^2.2.1",
+    "sqlite3": "^3.1.1"
   }
 }

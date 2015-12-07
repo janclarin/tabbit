@@ -5,5 +5,11 @@
 client/bower_components/
 node_modules/
 
+# Local databases
+*.sqlite
+
+# Debug
+npm-debug.log
+
 # Miscellaneous
 .DS_Store
