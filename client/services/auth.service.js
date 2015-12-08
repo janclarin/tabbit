@@ -75,17 +75,20 @@
             return deferred.promise;
         }
 
-        function register(username, password) {
+        function register(email, username, password, firstName, lastName) {
             // Create a new instance of deferred.
             var deferred = $q.defer();
 
             // Send a POST request to the server.
             $http.post('/users/register', {
+                    email: email,
                     username: username,
-                    password: password
+                    password: password,
+                    firstName: firstName,
+                    lastName: lastName
                 })
                 .then(function(response) {
-                    if (response.status === 200 && response.data.status) {
+                    if (response.status === 200 && response.data) {
                         deferred.resolve();
                     } else {
                         deferred.reject();

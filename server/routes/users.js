@@ -9,7 +9,9 @@ var express = require('express'),
 router.post('/register', function(req, res) {
     var email = req.body.email,
         username = req.body.username,
-        password = req.body.password;
+        password = req.body.password,
+        firstName = req.body.firstName,
+        lastName = req.body.lastName;
 
     var salt = bcrypt.genSaltSync(10);
     var hashedPassword = bcrypt.hashSync(password, salt);
@@ -19,12 +21,16 @@ router.post('/register', function(req, res) {
         email: email,
         username: username,
         password: hashedPassword,
-        salt: salt
+        salt: salt,
+        firstName: firstName,
+        lastName: lastName
     }).then(function(user) {
-        res.status(200).json(user);
+        res.status(200).json({
+            data: user
+        });
     }).catch(function(error) {
         // TODO: Handle error properly.
-        res.json({error: error});
+        res.status(500).json({error: error});
     });
 });
 
