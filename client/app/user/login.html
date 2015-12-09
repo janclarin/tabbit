@@ -1,4 +1,4 @@
-<div class="col-md-4">
+<div>
   <h1>Login</h1>
   <div ng-show="vm.error" class="alert alert-danger">{{vm.errorMessage}}</div>
   <form class="form" ng-submit="vm.logIn()">
@@ -11,7 +11,7 @@
       <input type="password" class="form-control" name="password" ng-model="vm.loginForm.password" required>
     </div>
     <div>
-      <button type="submit" class="btn btn-primary" ng-disabled="vm.disabled">Log In</button>
+      <button type="submit" class="btn btn-primary" ng-disabled="vm.disabled">Log in</button>
     </div>
   </form>
 </div>
