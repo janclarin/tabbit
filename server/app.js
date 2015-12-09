@@ -10,6 +10,8 @@ var setupPassport = require('./setup-passport');
 // Routes.
 var routes = require('./routes/index');
 var users = require('./routes/users');
+var lists = require('./routes/lists');
+var tabs = require('./routes/tabs');
 
 // Create Express instance.
 var app = express();
@@ -19,9 +21,9 @@ app.use(express.static(path.join(__dirname, '../client')));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(require('express-session')({
+app.use(expressSession({
     secret: 'keyboard cat', // TODO: Use proper secret.
     resave: false,
     saveUninitialized: false
@@ -30,9 +32,11 @@ app.use(require('express-session')({
 // Set up passport.
 setupPassport(app);
 
-// Routes.
+// Set routes.
 app.use('/', routes);
-app.use('/users', users);
+app.use('/api/v1', users);
+app.use('/api/v1', lists);
+app.use('/api/v1', tabs);
 
 // Error handlers.
 app.use(function(req, res, next) {

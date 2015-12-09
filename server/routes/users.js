@@ -1,3 +1,7 @@
+/**
+ * User routes.
+ *
+ */
 'use strict';
 
 var express = require('express'),
@@ -6,7 +10,7 @@ var express = require('express'),
     passport = require('passport'),
     models = require('../models/index');
 
-router.post('/register', function(req, res) {
+router.post('/users', function(req, res) {
     var email = req.body.email,
         username = req.body.username,
         password = req.body.password,
@@ -32,24 +36,6 @@ router.post('/register', function(req, res) {
         // TODO: Handle error properly.
         res.status(500).json({error: error});
     });
-});
-
-router.post('/login', passport.authenticate('local'), function(req, res) {
-    var user = req.user;
-    if (!user) {
-        return res.status(401).json({err: 'Unauthorized.'});
-    }
-    req.login(user, function(err) {
-        if (err) {
-            return res.status(500).json({err: 'Could not log in user.'});
-        }
-        return res.status(200).json({status: 'Login successful.'});
-    });
-});
-
-router.get('/logout', function(req, res) {
-    req.logout();
-    res.status(200).json({status: 'Logout successful.'}) ;
 });
 
 module.exports = router;
