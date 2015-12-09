@@ -17,7 +17,7 @@ module.exports = function(sequelize, DataTypes) {
     }, {
         classMethods: {
             associate: function(models) {
-                List.hasMany(models.Tab);
+                List.hasMany(models.Tab, { foreignKey: 'listId' });
             }
         }
     });
