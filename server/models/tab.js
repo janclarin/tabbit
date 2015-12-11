@@ -10,13 +10,30 @@ module.exports = function(sequelize, DataTypes) {
             primaryKey: true,
             autoIncrement: true
         },
-        songName: DataTypes.STRING,
-        artistName: DataTypes.STRING,
-        source: DataTypes.STRING,
+        songName: {
+            type: DataTypes.STRING,
+            allowNull: false
+        },
+        artistName: {
+            type: DataTypes.STRING
+        },
+        source: {
+            type: DataTypes.STRING
+        },
+        type: {
+            type: DataTypes.ENUM,
+            allowNull: false,
+            values: ['tab', 'sheet', 'chords']
+        },
         progress: {
             type: DataTypes.ENUM,
+            allowNull: false,
             values: ['want-to-learn', 'learning', 'learned']
+        }/*,
+        dateStarted: {
+            type: DataTypes.DATE,
         }
+        */
     }, {
         classMethods: {
             associate: function(models) {

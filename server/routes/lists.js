@@ -12,10 +12,12 @@ var express = require('express'),
 
 router.post('/users/:user_id/lists', function(req, res) {
     var name = req.body.name,
+        isPrivate = req.body.is_private,
         userId = req.params.user_id;
 
     models.List.create({
         name: name,
+        isPrivate: isPrivate,
         userId: userId
     }).then(function(list) {
         res.status(200).json({

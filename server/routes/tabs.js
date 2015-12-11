@@ -15,6 +15,7 @@ router.post('/lists/:list_id/tabs', function(req, res) {
     var songName = req.body.song_name,
         artistName = req.body.artist_name,
         source = req.body.source,
+        type = req.body.type,
         progress = req.body.progress,
         listId = req.params.list_id;
 
@@ -22,6 +23,7 @@ router.post('/lists/:list_id/tabs', function(req, res) {
         songName: songName,
         artistName: artistName,
         source: source,
+        type: type,
         progress: progress,
         listId: listId
     }).then(function(tab) {
