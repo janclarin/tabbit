@@ -20,7 +20,7 @@
         function logIn() {
             authService.logIn(vm.loginForm.username, vm.loginForm.password)
                 .then(function() {
-                    $location.path('/');
+                    $location.path('/lists');
                     vm.disabled = false;
                     vm.loginForm = {};
                 })

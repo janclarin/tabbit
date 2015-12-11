@@ -39,6 +39,12 @@
                 controllerAs: 'vm',
                 access: { restricted: false }
             })
+            .when('/lists', {
+                templateUrl: 'app/lists/list.html',
+                controller: 'ListController',
+                controllerAs: 'vm',
+                access: { restricted: false }
+            })
             .otherwise({
                 redirectTo: '/'
             });
