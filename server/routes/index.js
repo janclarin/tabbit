@@ -2,7 +2,6 @@
 
 var express = require('express'),
     router = express.Router(),
-    bcrypt = require('bcrypt-nodejs'),
     passport = require('passport'),
     models = require('../models/index');
 

@@ -2,7 +2,6 @@
  * Tab routes.
  *
  * Routes are preprended by:
- *
  * /api/v1/users/:user_id/lists/:list_id
  */
 'use strict';
@@ -11,13 +10,13 @@ var express = require('express'),
     router = express.Router(),
     models = require('../models/index');
 
-router.post('/lists/:list_id/tabs', function(req, res) {
-    var songName = req.body.song_name,
-        artistName = req.body.artist_name,
+router.post('/lists/:listId/tabs', function(req, res) {
+    var songName = req.body.songName,
+        artistName = req.body.artistName,
         source = req.body.source,
         type = req.body.type,
         progress = req.body.progress,
-        listId = req.params.list_id;
+        listId = req.params.listId;
 
     models.Tab.create({
         songName: songName,
@@ -27,7 +26,7 @@ router.post('/lists/:list_id/tabs', function(req, res) {
         progress: progress,
         listId: listId
     }).then(function(tab) {
-        res.status(200).json({
+        res.status(201).json({
             data: tab
         });
     }).catch(function(error) {

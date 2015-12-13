@@ -28,9 +28,14 @@ router.post('/users', function(req, res) {
         firstName: firstName,
         lastName: lastName
     }).then(function(user) {
-        res.status(200).json({
-            data: user
+        // Create a list upon user creation.
+        return models.List.create({
+            name: 'My song list',
+            ownerId: user.id,
+            isPrivate: false
         });
+    }).then(function(list) {
+        res.status(201).json({status: 'Account successfully created.'});
     }).catch(function(error) {
         // TODO: Handle error properly.
         res.status(500).json({error: error});
