@@ -42,6 +42,29 @@ router.get('/users/:userId/lists', function(req, res) {
         res.status(200).json({
             data: lists
         })
+    }).catch(function(error) {
+        // TODO: Handle error properly.
+        res.status(500).json({error: error});
+    });
+});
+
+// Get a user's list.
+router.get('/users/:userId/lists/:listId', function(req, res) {
+    var userId = req.params.userId,
+        listId = req.params.listId;
+
+    models.List.findOne({
+        where: {
+            id: listId,
+            ownerId: userId
+        }
+    }).then(function(list) {
+        res.status(200).json({
+            data: list
+        })
+    }).catch(function(error) {
+        // TODO: Handle error properly.
+        res.status(500).json({error: error});
     });
 });
 
