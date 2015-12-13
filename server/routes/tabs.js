@@ -10,6 +10,7 @@ var express = require('express'),
     router = express.Router(),
     models = require('../models/index');
 
+// Create a tab.
 router.post('/lists/:listId/tabs', function(req, res) {
     var songName = req.body.songName,
         artistName = req.body.artistName,
@@ -29,6 +30,62 @@ router.post('/lists/:listId/tabs', function(req, res) {
         res.status(201).json({
             data: tab
         });
+    }).catch(function(error) {
+        // TODO: Handle error properly.
+        res.status(500).json({error: error});
+    });
+});
+
+// Get list tabs.
+router.get('/lists/:listId/tabs', function(req, res) {
+    var listId = req.params.listId;
+
+    models.Tab.findAll({
+        where: {
+            listId: listId
+        }
+    }).then(function(tabs) {
+        res.status(200).json({
+            data: tabs
+        });
+    }).catch(function(error) {
+        // TODO: Handle error properly.
+        res.status(500).json({error: error});
+    });
+});
+
+// Get a tab from a list.
+router.get('/lists/:listId/tabs/:tabId', function(req, res) {
+    var listId = req.params.listId,
+        tabId = req.params.tabId;
+
+    models.Tab.findOne({
+        where: {
+            id: tabId,
+            listId: listId
+        }
+    }).then(function(tab) {
+        res.status(200).json({
+            data: tab
+        });
+    }).catch(function(error) {
+        // TODO: Handle error properly.
+        res.status(500).json({error: error});
+    })
+});
+
+// Delete a tab from a list.
+router.delete('/lists/:listId/tabs/:tabId', function(req, res) {
+    var listId = req.params.listId,
+        tabId = req.params.tabId;
+
+    models.Tab.destroy({
+        where: {
+            id: tabId,
+            listId: listId
+        }
+    }).then(function(affectedRows) {
+        res.status(204).json(); // TODO: Handle success properly.
     }).catch(function(error) {
         // TODO: Handle error properly.
         res.status(500).json({error: error});
