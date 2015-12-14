@@ -31,12 +31,13 @@
             return isUserAuthorized;
         }
 
+        // TODO: Move this to userService.
         function register(email, username, password, firstName, lastName) {
             // Create a new instance of deferred.
             var deferred = $q.defer();
 
             // Send a POST request to the server.
-            $http.post('api/v1/users', {
+            $http.post('/api/v1/users', {
                     email: email,
                     username: username,
                     password: password,

@@ -38,12 +38,13 @@ router.post('/lists/:listId/tabs', function(req, res) {
 
 // Get list tabs.
 router.get('/lists/:listId/tabs', function(req, res) {
-    var listId = req.params.listId;
+    var where = {
+        listId: req.params.listId
+    };
+    if (req.query.progress) { where.progress = req.query.progress; }
 
     models.Tab.findAll({
-        where: {
-            listId: listId
-        }
+        where: where
     }).then(function(tabs) {
         res.status(200).json({
             data: tabs
