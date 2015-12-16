@@ -20,6 +20,8 @@
         vm.list = null; // TODO: Get user ID from route.
         vm.listTabs = {};
 
+        // Populate the list with a hard-coded User ID.
+        // TODO: Grab the logged-in user's ID.
         getList(1)
             .then(function(list) {
                 vm.list = list;
