@@ -57,14 +57,12 @@
             return tabService.postTab(tab, listId)
                 .then(function(response) {
                     var newTab = response.data.data;
-                    console.log(tab);
-                    console.log(newTab);
                     if (newTab.progress === 'learning') {
                         vm.listTabs.learning.push(newTab);
                     } else if (newTab.progress === 'learned') {
-                        vm.listTabs.learned.push(response.data);
+                        vm.listTabs.learned.push(newTab);
                     } else {
-                        vm.listTabs.wantToLearn.push(response.data);
+                        vm.listTabs.wantToLearn.push(newTab);
                     }
                 })
                 .catch(function(error) {
