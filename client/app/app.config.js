@@ -46,7 +46,8 @@
                 access: { restricted: false }
             })
             .otherwise({
-                redirectTo: '/'
+                redirectTo: '/',
+                access: { restricted: false }
             });
     }
 

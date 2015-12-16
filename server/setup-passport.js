@@ -30,25 +30,24 @@ module.exports = function(app) {
 
                 return done(null, user);
             }).catch(function(err) {
-                //return done(null, false, { message: 'An error occurred' });
+                return done(null, false, { message: 'An error occurred' });
             });
         }
     ));
 
-    passport.serializeUser(function(User, done) {
-        done(null, User.id);
+    passport.serializeUser(function(user, done) {
+        done(null, user.id);
     });
 
     passport.deserializeUser(function(id, done) {
         models.User.findOne({
             where: {
-                'id': id
+                id: id
             }
         }).then(function(user) {
-            if (user) {
-                done(new Error('Wrong user ID.'));
-            }
             done(null, user);
+        }).catch(function(err) {
+            done(err, null);
         });
     });
 };

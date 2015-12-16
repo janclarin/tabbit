@@ -41,7 +41,7 @@ router.get('/users/:userId/lists', function(req, res) {
     }).then(function(lists) {
         res.status(200).json({
             data: lists
-        })
+        });
     }).catch(function(error) {
         // TODO: Handle error properly.
         res.status(500).json({error: error});
@@ -61,7 +61,7 @@ router.get('/users/:userId/lists/:listId', function(req, res) {
     }).then(function(list) {
         res.status(200).json({
             data: list
-        })
+        });
     }).catch(function(error) {
         // TODO: Handle error properly.
         res.status(500).json({error: error});

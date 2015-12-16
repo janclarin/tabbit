@@ -6,6 +6,7 @@
 
 var express = require('express'),
     router = express.Router(),
+    passport = require('passport'),
     bcrypt = require('bcrypt-nodejs'),
     models = require('../models/index');
 
@@ -35,7 +36,9 @@ router.post('/users', function(req, res) {
             isPrivate: false
         });
     }).then(function(list) {
-        res.status(201).json({status: 'Account successfully created.'});
+        passport.authenticate('local')(req, res, function() {
+            return res.status(201).json({status: 'Account successfully created.'});
+        });
     }).catch(function(error) {
         // TODO: Handle error properly.
         res.status(500).json({error: error});

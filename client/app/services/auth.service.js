@@ -45,7 +45,7 @@
                     lastName: lastName
                 })
                 .then(function(response) {
-                    if (response.status === 200 && response.data) {
+                    if (response.status === 201 && response.data) {
                         deferred.resolve();
                     } else {
                         deferred.reject();
@@ -63,7 +63,8 @@
             var deferred = $q.defer();
 
             // Send a POST request to the server.
-            $http.post('/login', {
+            $http.post('/login',
+                {
                     username: username,
                     password: password
                 })

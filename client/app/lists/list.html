@@ -2,18 +2,39 @@
   <!-- Page header -->
   <div>
     <h2 class="">{{ vm.list.name }}</h2>
-    <button type="button" class="btn btn-primary">Add Song</button>
+    <!--<button type="button" class="btn btn-primary">Add Song</button>-->
   </div>
 
   <!-- Tab list -->
   <div>
     <div class="list-group">
-      <div class="list-group-item list-group-item-info">Currently Learning</div>
-      <div class="list-group-item" ng-repeat="tab in vm.listTabs.learning">{{ tab.songName }}</div>
-      <div class="list-group-item list-group-item-info">Learned</div>
-      <div class="list-group-item" ng-repeat="tab in vm.listTabs.learned">{{ tab.songName }}</div>
-      <div class="list-group-item list-group-item-info">Want to learn</div>
-      <div class="list-group-item" ng-repeat="tab in vm.listTabs.wantToLearn">{{ tab.songName }}</div>
+
+      <div class="list-group-item">
+        Song | Artist | Type <!--| Date Started-->
+      </div>
+      <!-- Learning -->
+      <div class="list-group-item list-group-item-info">
+        <strong>Currently Learning</strong>
+      </div>
+      <div class="list-group-item" ng-repeat="tab in vm.listTabs.learning">
+        {{ tab.songName }} | {{ tab.artistName}} | {{ tab.type }}
+      </div>
+
+      <!-- Learned -->
+      <div class="list-group-item list-group-item-info">
+        <strong>Learned</strong>
+      </div>
+      <div class="list-group-item" ng-repeat="tab in vm.listTabs.learned">
+        {{ tab.songName }} | {{ tab.artistName}} | {{ tab.type }}
+      </div>
+
+      <!-- Want to Learn -->
+      <div class="list-group-item list-group-item-info">
+        <strong>Want to Learn</strong>
+      </div>
+      <div class="list-group-item" ng-repeat="tab in vm.listTabs.wantToLearn">
+        {{ tab.songName }} | {{ tab.artistName}} | {{ tab.type }}
+      </div>
     </div>
   </div>
 

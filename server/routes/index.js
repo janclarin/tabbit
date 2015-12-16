@@ -9,18 +9,20 @@ router.get('/', function(req, res) {
     res.sendFile(path.join(__dirname, '../client', 'index.html'));
 });
 
-router.post('/login', passport.authenticate('local'), function(req, res) {
-    var user = req.user;
-    if (!user) {
-        return res.status(401).json({err: 'Unauthorized.'});
-    }
-    req.login(user, function(err) {
-        if (err) {
-            return res.status(500).json({err: 'Could not log in user.'});
-        }
-        return res.status(200).json({status: 'Login successful.'});
-    });
+router.get('/loginFailure', function(req,res, next) {
+    res.status(500).json({err: 'Could not log in user.'});
 });
+
+router.get('/loginSuccess', function(req, res, next) {
+    res.status(200).json({status: 'Login successful.'});
+});
+
+router.post('/login',
+    passport.authenticate('local', {
+        successRedirect: '/loginSuccess',
+        failureRedirect: '/loginFailure'
+    })
+);
 
 router.get('/logout', function(req, res) {
     req.logout();
