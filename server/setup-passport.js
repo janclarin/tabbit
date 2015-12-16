@@ -39,15 +39,7 @@ module.exports = function(app) {
         done(null, user.id);
     });
 
-    passport.deserializeUser(function(id, done) {
-        models.User.findOne({
-            where: {
-                id: id
-            }
-        }).then(function(user) {
-            done(null, user);
-        }).catch(function(err) {
-            done(err, null);
-        });
+    passport.deserializeUser(function(obj, done) {
+        done(null, obj);
     });
 };
