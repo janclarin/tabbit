@@ -1,0 +1,43 @@
+<form class="form" ng-submit="vm.confirm()">
+  <div class="modal-header">
+    <h3 class="modal-title">Add tab</h3>
+  </div>
+  <div class="modal-body">
+    <div class="form-group">
+      <label for="input-song">Song</label>
+      <input type="text" class="form-control" id="input-song" name="song" ng-model="vm.modalForm.songName" required autofocus>
+    </div>
+    <div class="form-group">
+      <label for="input-artist">Artist</label>
+      <input type="text" class="form-control" id="input-artist" name="artist" ng-model="vm.modalForm.artistName" required>
+    </div>
+    <div class="form-group">
+      <label for="input-source">Source link/attachment</label>
+      <input type="text" class="form-control" id="input-source" name="source" ng-model="vm.modalForm.source">
+    </div>
+    <div class="form-group">
+      <label for="input-type">Type</label>
+      <select class="form-control" id="input-type" name="type"
+              ng-init="vm.modalForm.type = 'tab'"
+              ng-model="vm.modalForm.type" required>
+        <option>tab</option>
+        <option>chords</option>
+        <option>sheet</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="input-progress">Progress</label>
+      <select class="form-control" id="input-progress" name="progress"
+              ng-init="vm.modalForm.progress = 'learning'"
+              ng-model="vm.modalForm.progress" required>
+        <option>learning</option>
+        <option>learned</option>
+        <option>want-to-learn</option>
+      </select>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-default" ng-click="vm.cancel()">Cancel</button>
+    <button type="submit" class="btn btn-primary">Create</button>
+  </div>
+</form>

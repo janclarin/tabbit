@@ -8,11 +8,12 @@
         .module('app')
         .controller('ListController', ListController);
 
-    ListController.$inject = ['$location', 'listService', 'tabService'];
+    ListController.$inject = ['$location', '$uibModal', 'listService', 'tabService'];
 
-    function ListController($location, listService, tabService) {
+    function ListController($location, $uibModal, listService, tabService) {
         var vm = this;
 
+        vm.createTabModal = createTabModal;
         vm.postTab = postTab;
         vm.getList = getList;
         vm.getListTabs = getListTabs;
@@ -36,15 +37,35 @@
                     });
             });
 
+        function createTabModal() {
+            var modalInstance = $uibModal.open({
+                animation: true,
+                templateUrl: 'app/modals/modal-create-tab.html',
+                controller: 'ModalController',
+                controllerAs: 'vm'
+            });
+
+            modalInstance.result
+                .then(function(tab) {
+                    vm.postTab(tab, vm.list.id);
+                });
+        }
+
         function postTab(tab, listId) {
-            vm.listTabs.push(tab);
-            // TODO: Add tab to list. If error posting, remove from local list.
             return tabService.postTab(tab, listId)
                 .then(function(response) {
-                    // TODO: refresh tab list?
+                    var newTab = response.data.data;
+                    console.log(tab);
+                    console.log(newTab);
+                    if (newTab.progress === 'learning') {
+                        vm.listTabs.learning.push(newTab);
+                    } else if (newTab.progress === 'learned') {
+                        vm.listTabs.learned.push(response.data);
+                    } else {
+                        vm.listTabs.wantToLearn.push(response.data);
+                    }
                 })
                 .catch(function(error) {
-                    vm.listTabs.pop(); // Remove added tab?
                 });
         }
 

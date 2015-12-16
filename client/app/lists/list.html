@@ -2,7 +2,7 @@
   <!-- Page header -->
   <div>
     <h2 class="">{{ vm.list.name }}</h2>
-    <!--<button type="button" class="btn btn-primary">Add Song</button>-->
+    <button type="button" class="btn btn-primary" ng-click="vm.createTabModal()">Add Song</button>
   </div>
 
   <!-- Tab list -->
@@ -16,7 +16,7 @@
       <div class="list-group-item list-group-item-info">
         <strong>Currently Learning</strong>
       </div>
-      <div class="list-group-item" ng-repeat="tab in vm.listTabs.learning">
+      <div class="list-group-item" ng-repeat="tab in vm.listTabs.learning track by tab.id">
         {{ tab.songName }} | {{ tab.artistName}} | {{ tab.type }}
       </div>
 
@@ -24,7 +24,7 @@
       <div class="list-group-item list-group-item-info">
         <strong>Learned</strong>
       </div>
-      <div class="list-group-item" ng-repeat="tab in vm.listTabs.learned">
+      <div class="list-group-item" ng-repeat="tab in vm.listTabs.learned track by tab.id">
         {{ tab.songName }} | {{ tab.artistName}} | {{ tab.type }}
       </div>
 
@@ -32,7 +32,7 @@
       <div class="list-group-item list-group-item-info">
         <strong>Want to Learn</strong>
       </div>
-      <div class="list-group-item" ng-repeat="tab in vm.listTabs.wantToLearn">
+      <div class="list-group-item" ng-repeat="tab in vm.listTabs.wantToLearn track by tab.id">
         {{ tab.songName }} | {{ tab.artistName}} | {{ tab.type }}
       </div>
     </div>
