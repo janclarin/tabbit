@@ -11,14 +11,14 @@
 <body>
 
   <div class="container">
-    <div ng-view></div>
+    <div ui-view></div>
   </div>
 
   <!-- Scripts -->
   <script src="bower_components/jquery/dist/jquery.min.js"></script>
   <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
   <script src="bower_components/angular/angular.min.js"></script>
-  <script src="bower_components/angular-route/angular-route.min.js"></script>
+  <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
   <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
 
   <!-- Angular -->
@@ -26,12 +26,14 @@
   <script src="app/app.module.js"></script>
 
   <!-- Services -->
+  <script src="app/services/user.service.js"></script>
   <script src="app/services/auth.service.js"></script>
   <script src="app/services/list.service.js"></script>
   <script src="app/services/tab.service.js"></script>
 
   <!-- Controllers -->
   <script src="app/modals/modal.controller.js"></script>
+  <script src="app/lists/list-detail.controller.js"></script>
   <script src="app/lists/list.controller.js"></script>
   <script src="app/users/register.controller.js"></script>
   <script src="app/users/login.controller.js"></script>

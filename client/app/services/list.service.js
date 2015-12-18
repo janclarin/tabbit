@@ -15,20 +15,24 @@
         var apiUrl = '/api/v1';
 
         return {
-            getList: getList,
-            getLists: getLists
+            get: get,
+            query: query
         };
 
-        function getList(userId, listId) {
+        function get(listId) {
             return $http.get(
-                apiUrl + '/users/' + userId + '/lists/' + listId
-            );
+                apiUrl + '/lists/' + listId
+            ).then(function(response) {
+                return response.data.data;
+            });
         }
 
-        function getLists(userId) {
+        function query(userId) {
             return $http.get(
                 apiUrl + '/users/' + userId + '/lists'
-            );
+            ).then(function(response) {
+                return response.data.data; // Lists
+            });
         }
     }
 })();

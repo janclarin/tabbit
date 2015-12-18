@@ -8,9 +8,9 @@
         .module('app')
         .controller('LoginController', LoginController);
 
-    LoginController.$inject = ['$location', 'authService'];
+    LoginController.$inject = ['$state', 'authService'];
 
-    function LoginController($location, authService) {
+    function LoginController($state, authService) {
         var vm = this;
 
         vm.logIn = logIn;
@@ -20,7 +20,9 @@
         function logIn() {
             authService.logIn(vm.loginForm.username, vm.loginForm.password)
                 .then(function() {
-                    $location.path('/lists');
+                    // Redirect to list controller.
+                    var userId = authService.getLoggedInUserId();
+                    $state.go('lists', { userId: userId });
                     vm.disabled = false;
                     vm.loginForm = {};
                 })

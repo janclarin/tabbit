@@ -12,16 +12,23 @@
 
     function authService($q, $timeout, $http) {
 
+        var loggedInUserId;
+
         // Create user variable.
         var isUserAuthorized = null;
 
         return {
             isLoggedIn: isLoggedIn,
+            getLoggedInUserId: getLoggedInUserId,
             getUserStatus: getUserStatus,
             register: register,
             logIn: logIn,
             logOut: logOut
         };
+
+        function getLoggedInUserId() {
+            return loggedInUserId;
+        }
 
         function isLoggedIn() {
             return Boolean(isUserAuthorized);
@@ -70,6 +77,7 @@
                 })
                 .then(function(response) {
                     if (response.status === 200 && response.data.status) {
+                        loggedInUserId = response.data.data.userId; // Store user ID.
                         isUserAuthorized = true;
                         deferred.resolve();
                     } else {
@@ -92,10 +100,10 @@
             // Send a GET request to the server.
             $http.get('/logout')
                 .then(function(response) {
-                    user = false;
+                    loggedInUserId = false;
                     deferred.resolve();
                 }, function(response) {
-                    user = false;
+                    loggedInUserId = false;
                     deferred.reject();
                 });
 

@@ -9,50 +9,55 @@
         .config(config)
         .run(run);
 
-    function config($routeProvider, $locationProvider) {
+    function config($locationProvider, $stateProvider, $urlRouterProvider) {
         // Use HTML5 History API.
         //$locationProvider.html5Mode(true);
 
-        // Configure routes.
-        $routeProvider
-            .when('/', {
+        // Default to index.
+        $urlRouterProvider.otherwise('/');
+
+        // Set states.
+        $stateProvider
+            .state('home', {
+                url: '/',
                 templateUrl: 'app/users/login.html',
                 controller: 'LoginController',
                 controllerAs: 'vm',
                 access: { restricted: false }
             })
-            .when('/login', {
-                templateUrl: 'app/users/login.html',
-                controller: 'LoginController',
-                controllerAs: 'vm',
-                access: { restricted: false }
-            })
-            .when('/logout', {
+            .state('logout', {
+                url: '/logout',
                 templateUrl: 'app/users/logout.html',
                 controller: 'LogoutController',
                 controllerAs: 'vm',
                 access: { restricted: false }
             })
-            .when('/register', {
+            .state('register', {
+                url: '/register',
                 templateUrl: 'app/users/register.html',
                 controller: 'RegisterController',
                 controllerAs: 'vm',
                 access: { restricted: false }
             })
-            .when('/lists', {
-                templateUrl: 'app/lists/list.html',
+            .state('lists', {
+                url: '/users/:userId/lists',
+                // TODO: Add template url for lists.
                 controller: 'ListController',
                 controllerAs: 'vm',
                 access: { restricted: false }
             })
-            .otherwise({
-                redirectTo: '/',
+            .state('lists-detail', {
+                url: '/lists/:listId/tabs',
+                templateUrl: 'app/lists/list-detail.html',
+                controller: 'ListDetailController',
+                controllerAs: 'vm',
                 access: { restricted: false }
-            });
+            })
+        ;
     }
 
-    function run($rootScope, $location, $route, authService) {
-        $rootScope.$on('$routeChangeStart', function(event, next, current) {
+    function run($rootScope, $location, $state, authService) {
+        $rootScope.$on('$stateChangeStart', function(event, next, current) {
             if (next.access.restricted && !authService.isLoggedIn()) {
                 $location.path('/login');
             }

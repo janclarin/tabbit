@@ -39,9 +39,29 @@ router.post('/users', function(req, res) {
         passport.authenticate('local')(req, res, function() {
             return res.status(201).json({status: 'Account successfully created.'});
         });
-    }).catch(function(error) {
+    }).catch(function(err) {
         // TODO: Handle error properly.
-        res.status(500).json({error: error});
+        res.status(500).json({err: err});
+    });
+});
+
+// Get user by ID.
+router.get('/users/:userId', function(req, res) {
+    var userId = req.params.userId;
+
+    models.User.findOne({
+        where: {
+            id: userId
+        }
+    }).then(function(user) {
+        delete user.password; // Don't send password hash.
+        delete user.salt; // Don't send salt.
+        res.status(200).json({
+            data: user
+        });
+    }).catch(function(err) {
+        // TODO: Handle error properly.
+        res.status(500).json({err: err});
     });
 });
 

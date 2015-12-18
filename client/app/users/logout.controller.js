@@ -8,9 +8,9 @@
         .module('app')
         .controller('LogoutController', LogoutController);
 
-    LogoutController.$inject = ['$location', 'authService'];
+    LogoutController.$inject = ['$state', 'authService'];
 
-    function LogoutController($location, authService) {
+    function LogoutController($state, authService) {
         var vm = this;
 
         vm.logOut = logOut;
@@ -18,7 +18,7 @@
         function logOut() {
             authService.logOut()
                 .then(function() {
-                    $location.path('/login');
+                    $state.go('login');
                 });
         }
     }

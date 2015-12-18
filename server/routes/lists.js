@@ -30,7 +30,7 @@ router.post('/users/:userId/lists', function(req, res) {
     });
 });
 
-// Get all of the user's lists.
+// Get query of the user's lists.
 router.get('/users/:userId/lists', function(req, res) {
     var userId = req.params.userId;
 
@@ -68,4 +68,21 @@ router.get('/users/:userId/lists/:listId', function(req, res) {
     });
 });
 
+// Get a list.
+router.get('/lists/:listId', function(req, res) {
+    var listId = req.params.listId;
+
+    models.List.findOne({
+        where: {
+            id: listId,
+        }
+    }).then(function(list) {
+        res.status(200).json({
+            data: list
+        });
+    }).catch(function(error) {
+        // TODO: Handle error properly.
+        res.status(500).json({error: error});
+    });
+});
 module.exports = router;
