@@ -23,7 +23,7 @@
             return $http.get(
                 apiUrl + '/lists/' + listId
             ).then(function(response) {
-                return response.data.data;
+                return response.data;
             });
         }
 
@@ -31,7 +31,7 @@
             return $http.get(
                 apiUrl + '/users/' + userId + '/lists'
             ).then(function(response) {
-                return response.data.data; // Lists
+                return response.data; // Lists
             });
         }
     }

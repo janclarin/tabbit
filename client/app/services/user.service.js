@@ -17,7 +17,7 @@
         function get(userId) {
             return $http.get(apiUrl + 'users/' + userId)
                 .then(function(response) {
-                    return response.data.data; // User object.
+                    return response.data; // User object.
                 });
         }
     }

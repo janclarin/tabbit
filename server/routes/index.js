@@ -21,12 +21,7 @@ router.get('/loginSuccess/:username', function(req, res, next) {
             username: username
         }
     }).then(function(user) {
-        res.status(200).json({
-            status: 'Login successful.',
-            data: {
-                userId: user.id
-            }
-        });
+        res.status(200).json(user.id); // Send the logged-in user's ID.
     }).catch(function(err) {
          // TODO: Use proper error handling.
         res.status(500).json({err: err});

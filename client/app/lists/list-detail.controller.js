@@ -15,7 +15,6 @@
 
         vm.createTabModal = createTabModal;
         vm.saveTab = saveTab;
-        vm.queryTabs = queryTabs;
         vm.list = null;
         vm.listId = $stateParams.listId; // Get list object from state params.
         vm.listTabs = {};
@@ -26,17 +25,17 @@
             listService.get(vm.listId)
                 .then(function(list) {
                     vm.list = list;
-                    queryTabs(vm.list.id, { params: { progress: 'learning' } })
-                        .then(function(response) {
-                            vm.listTabs.learning = response.data;
+                    tabService.query(vm.list.id, { params: { progress: 'learning' } })
+                        .then(function(tabs) {
+                            vm.listTabs.learning = tabs;
                         });
-                    queryTabs(vm.list.id, { params: { progress: 'learned' } })
-                        .then(function(response) {
-                            vm.listTabs.learned = response.data;
+                    tabService.query(vm.list.id, { params: { progress: 'learned' } })
+                        .then(function(tabs) {
+                            vm.listTabs.learned = tabs;
                         });
-                    queryTabs(vm.list.id, { params: { progress: 'want-to-learn' } })
-                        .then(function(response) {
-                            vm.listTabs.wantToLearn = response.data;
+                    tabService.query(vm.list.id, { params: { progress: 'want-to-learn' } })
+                        .then(function(tabs) {
+                            vm.listTabs.wantToLearn = tabs;
                         });
                 });
         }
@@ -57,27 +56,16 @@
 
         function saveTab(tab, listId) {
             return tabService.saveTab(tab, listId)
-                .then(function(response) {
-                    var newTab = response.data.data;
-                    if (newTab.progress === 'learning') {
-                        vm.listTabs.learning.push(newTab);
-                    } else if (newTab.progress === 'learned') {
-                        vm.listTabs.learned.push(newTab);
+                .then(function(tab) {
+                    if (tab.progress === 'learning') {
+                        vm.listTabs.learning.push(tab);
+                    } else if (tab.progress === 'learned') {
+                        vm.listTabs.learned.push(tab);
                     } else {
-                        vm.listTabs.wantToLearn.push(newTab);
+                        vm.listTabs.wantToLearn.push(tab);
                     }
                 })
                 .catch(function(error) {
-                });
-        }
-
-        function queryTabs(listId, params) {
-            return tabService.query(listId, params)
-                .then(function(response) {
-                    return response.data;
-                })
-                .catch(function(error) {
-                    vm.listTabs = [];
                 });
         }
     }

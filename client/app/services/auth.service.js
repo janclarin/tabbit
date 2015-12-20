@@ -76,8 +76,8 @@
                     password: password
                 })
                 .then(function(response) {
-                    if (response.status === 200 && response.data.status) {
-                        loggedInUserId = response.data.data.userId; // Store user ID.
+                    if (response.status === 200 && response.data) {
+                        loggedInUserId = response.data; // Store user ID.
                         isUserAuthorized = true;
                         deferred.resolve();
                     } else {

@@ -1,8 +1,5 @@
 /**
  * Lists routes.
- *
- * Routes are prepended by:
- * /api/v1/users/:user_id
  */
 'use strict';
 
@@ -10,79 +7,75 @@ var express = require('express'),
     router = express.Router(),
     models = require('../models/index');
 
-// Create a new list under the user specified by the id.
-router.post('/users/:userId/lists', function(req, res) {
-    var name = req.body.name,
-        isPrivate = req.body.isPrivate,
-        userId = req.params.userId;
+//router.route('/lists');
+//.get(getLists) TODO
 
-    models.List.create({
-        name: name,
-        isPrivate: isPrivate,
-        userId: userId
-    }).then(function(list) {
-        res.status(201).json({
-            data: list
-        });
-    }).catch(function(error) {
-        // TODO: Handle error properly.
-        res.status(500).json({error: error});
-    });
-});
+router.route('/lists/:listId')
+    .get(getList);
+//.put(putList)
+//.delete(deleteList)
 
-// Get query of the user's lists.
-router.get('/users/:userId/lists', function(req, res) {
-    var userId = req.params.userId;
-
-    models.List.findAll({
-        where: {
-            ownerId: userId
-        }
-    }).then(function(lists) {
-        res.status(200).json({
-            data: lists
-        });
-    }).catch(function(error) {
-        // TODO: Handle error properly.
-        res.status(500).json({error: error});
-    });
-});
-
-// Get a user's list.
-router.get('/users/:userId/lists/:listId', function(req, res) {
-    var userId = req.params.userId,
-        listId = req.params.listId;
-
-    models.List.findOne({
-        where: {
-            id: listId,
-            ownerId: userId
-        }
-    }).then(function(list) {
-        res.status(200).json({
-            data: list
-        });
-    }).catch(function(error) {
-        // TODO: Handle error properly.
-        res.status(500).json({error: error});
-    });
-});
+router.route('/lists/:listId/tabs')
+    .get(getListTabs)
+    .post(postListTab);
 
 // Get a list.
-router.get('/lists/:listId', function(req, res) {
+function getList(req, res) {
     var listId = req.params.listId;
 
     models.List.findOne({
         where: {
-            id: listId,
+            id: listId
         }
-    }).then(function(list) {
-        res.status(200).json({
-            data: list
-        });
-    }).catch(function(error) {
+    }).then(function (list) {
+        res.status(200).json(list);
+    }).catch(function (error) {
         // TODO: Handle error properly.
         res.status(500).json({error: error});
     });
-});
+}
+
+// Get list tabs.
+function getListTabs(req, res) {
+    var where = {
+        listId: req.params.listId
+    };
+    if (req.query.progress) {
+        where.progress = req.query.progress;
+    }
+
+    models.Tab.findAll({
+        where: where
+    }).then(function (tabs) {
+        res.status(200).json(tabs);
+    }).catch(function (error) {
+        // TODO: Handle error properly.
+        res.status(500).json({error: error});
+    });
+}
+
+// Create a tab.
+function postListTab(req, res) {
+    var songName = req.body.songName,
+        artistName = req.body.artistName,
+        source = req.body.source,
+        type = req.body.type,
+        progress = req.body.progress,
+        listId = req.params.listId;
+
+    models.Tab.create({
+        songName: songName,
+        artistName: artistName,
+        source: source,
+        type: type,
+        progress: progress,
+        listId: listId
+    }).then(function (tab) {
+        res.status(201).json(tab);
+    }).catch(function (error) {
+        // TODO: Handle error properly.
+        res.status(500).json({error: error});
+    });
+}
+
 module.exports = router;
