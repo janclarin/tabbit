@@ -24,7 +24,8 @@ module.exports = function(sequelize, DataTypes) {
             associate: function(models) {
                 List.hasMany(models.Tab, { foreignKey: 'listId' });
             }
-        }
+        },
+        freezeTableName: true
     });
     return List;
 };

@@ -51,7 +51,8 @@ module.exports = function(sequelize, DataTypes) {
             getFullName: function() {
                 return [this.firstName, this.lastName].join(' ');
             }
-        }
+        },
+        freezeTableName: true
     });
     return User;
 };
