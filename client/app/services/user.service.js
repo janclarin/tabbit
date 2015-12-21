@@ -7,7 +7,7 @@
 
     userService.$inject = ['$http'];
 
-    function userService() {
+    function userService($http) {
         var apiUrl = '/api/v1';
 
         return {
@@ -15,7 +15,7 @@
         };
 
         function get(userId) {
-            return $http.get(apiUrl + 'users/' + userId)
+            return $http.get(apiUrl + '/users/' + userId)
                 .then(function(response) {
                     return response.data; // User object.
                 });
