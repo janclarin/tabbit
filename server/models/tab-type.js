@@ -1,33 +1,26 @@
 /**
- * Tab model.
+ * Tab type model.
  */
 'use strict';
 
 module.exports = function(sequelize, DataTypes) {
-    var Tab = sequelize.define('Tab', {
+    var TabType = sequelize.define('TabType', {
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true
         },
-        songName: {
+        name: {
             type: DataTypes.STRING,
             allowNull: false
-        },
-        artistName: {
-            type: DataTypes.STRING
-        },
-        source: {
-            type: DataTypes.STRING
         }
     }, {
         classMethods: {
             associate: function(models) {
-                Tab.belongsTo(models.TabType);
-                Tab.belongsTo(models.TabProgress);
+                TabType.hasMany(models.Tab, { as: 'Tabs', foreignKey: 'typeId' });
             }
         },
         freezeTableName: true
     });
-    return Tab;
+    return TabType;
 };
