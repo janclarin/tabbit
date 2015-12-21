@@ -23,8 +23,8 @@ module.exports = function(sequelize, DataTypes) {
     }, {
         classMethods: {
             associate: function(models) {
-                Tab.belongsTo(models.TabType);
-                Tab.belongsTo(models.TabProgress);
+                Tab.belongsTo(models.TabType, {foreignKey: 'typeId'});
+                Tab.belongsTo(models.TabProgress, {foreignKey: 'progressId'});
             }
         },
         freezeTableName: true

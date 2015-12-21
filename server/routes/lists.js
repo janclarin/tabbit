@@ -40,8 +40,15 @@ function getListTabs(req, res) {
     var where = {
         listId: req.params.listId
     };
-    if (req.query.progress) {
-        where.progress = req.query.progress;
+
+    // Query by progress ID if it was specified.
+    if (req.query.progressId) {
+        where.progressId = req.query.progressId;
+    }
+
+    // Query by type Id if it was specified.
+    if (req.query.typeId) {
+        where.typeId = req.query.typeId;
     }
 
     models.Tab.findAll({
@@ -59,16 +66,16 @@ function postListTab(req, res) {
     var songName = req.body.songName,
         artistName = req.body.artistName,
         source = req.body.source,
-        type = req.body.type,
-        progress = req.body.progress,
+        typeId = req.body.typeId,
+        progressId = req.body.progressId,
         listId = req.params.listId;
 
     models.Tab.create({
         songName: songName,
         artistName: artistName,
         source: source,
-        type: type,
-        progress: progress,
+        typeId: typeId,
+        progressId: progressId,
         listId: listId
     }).then(function (tab) {
         res.status(201).json(tab);

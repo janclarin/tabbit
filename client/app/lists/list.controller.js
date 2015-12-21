@@ -20,18 +20,12 @@
         activate();
 
         function activate() {
-            getLists(vm.userId)
-                .then(function() {
+            listService.query(vm.userId)
+                .then(function(lists) {
+                    vm.lists = lists;
                     var list = vm.lists[0];
                     $state.go('lists-detail', { listId: list.id });
                 });
-        }
-
-        function getLists(userId) {
-            return listService.query(userId)
-                .then(function(lists) {
-                    vm.lists = lists;
-                })
         }
     }
 })();

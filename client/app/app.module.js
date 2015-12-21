@@ -6,6 +6,7 @@
 
     angular
         .module('app', [
+            'angular.filter',
             'ui.bootstrap',
             'ui.router'
         ]);

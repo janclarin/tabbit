@@ -8,35 +8,60 @@
         .module('app')
         .controller('ListDetailController', ListDetailController);
 
-    ListDetailController.$inject = ['$stateParams', '$uibModal', 'listService', 'tabService'];
+    ListDetailController.$inject = ['$stateParams', '$uibModal', 'listService', 'tabService', 'tabProgressService',
+        'tabTypeService', 'userService'];
 
-    function ListDetailController($stateParams, $uibModal, listService, tabService) {
+    function ListDetailController($stateParams, $uibModal, listService, tabService, tabProgressService, tabTypeService,
+                                  userService) {
         var vm = this;
 
         vm.createTabModal = createTabModal;
         vm.saveTab = saveTab;
+        vm.getTabCount = getTabCount;
         vm.list = null;
         vm.listId = $stateParams.listId; // Get list object from state params.
-        vm.listTabs = {};
+        vm.listOwner = null;
+        vm.tabProgresses = [];
+        vm.tabTypes = [];
+        vm.tabs = [];
 
         activate();
 
         function activate() {
+            // Get list of tabs for each category.
             listService.get(vm.listId)
-                .then(function(list) {
+                .then(function (list) {
                     vm.list = list;
-                    tabService.query(vm.list.id, { params: { progress: 'learning' } })
-                        .then(function(tabs) {
-                            vm.listTabs.learning = tabs;
+                    userService.get(list.ownerId)
+                        .then(function (user) {
+                            vm.listOwner = user;
                         });
-                    tabService.query(vm.list.id, { params: { progress: 'learned' } })
-                        .then(function(tabs) {
-                            vm.listTabs.learned = tabs;
+                    tabProgressService.query()
+                        .then(function (tabProgresses) {
+                            vm.tabProgresses = tabProgresses;
                         });
-                    tabService.query(vm.list.id, { params: { progress: 'want-to-learn' } })
-                        .then(function(tabs) {
-                            vm.listTabs.wantToLearn = tabs;
+                    tabTypeService.query()
+                        .then(function (tabTypes) {
+                            vm.tabTypes = tabTypes;
                         });
+                    tabService.query(list.id)
+                        .then(function (tabs) {
+                            vm.tabs = tabs;
+                        });
+                });
+        }
+
+        function getListTabsByProgress(listId, progressId) {
+            return tabService.query(listId)
+                .then(function (tabs) {
+                });
+        }
+
+        function getListOwner(ownerId) {
+            // Get owner information.
+            return userService.get(ownerId)
+                .then(function(user) {
+                    vm.listOwner = user;
                 });
         }
 
@@ -67,6 +92,14 @@
                 })
                 .catch(function(error) {
                 });
+        }
+
+        /**
+         * Sums the list of tabs.
+         * @returns {number} total number of tabs.
+         */
+        function getTabCount() {
+            return vm.tabsLearning.length + vm.tabsLearned.length + vm.tabsPlanToLearn.length;
         }
     }
 })();

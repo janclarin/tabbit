@@ -1,41 +1,42 @@
-<div>
+<!-- List Detail page -->
+<div class="list-container">
   <!-- Page header -->
-  <div>
-    <h2 class="">{{ vm.list.name }}</h2>
-    <button type="button" class="btn btn-primary" ng-click="vm.createTabModal()">Add Song</button>
-  </div>
-
-  <!-- Tab list -->
-  <div>
-    <div class="list-group">
-
-      <div class="list-group-item">
-        Song | Artist | Type <!--| Date Started-->
+  <div class="row">
+    <div class="col-lg-6">
+      <h3 class="">{{ vm.list.name }}</h3>
+      <p>{{ vm.listOwner.username }} - {{ vm.tabs.length }} songs</p>
+    </div>
+    <div class="col-lg-6">
+      <div class="pull-right">
+        <button type="button" class="btn btn-primary" ng-click="vm.createTabModal()">Add Song</button>
       </div>
-      <!-- Learning -->
-      <div class="list-group-item list-group-item-info">
-        <strong>Currently Learning</strong>
-      </div>
-      <div class="list-group-item" ng-repeat="tab in vm.listTabs.learning track by tab.id">
-        {{ tab.songName }} | {{ tab.artistName}} | {{ tab.type }}
-      </div>
-
-      <!-- Learned -->
-      <div class="list-group-item list-group-item-info">
-        <strong>Learned</strong>
-      </div>
-      <div class="list-group-item" ng-repeat="tab in vm.listTabs.learned track by tab.id">
-        {{ tab.songName }} | {{ tab.artistName}} | {{ tab.type }}
-      </div>
-
-      <!-- Want to Learn -->
-      <div class="list-group-item list-group-item-info">
-        <strong>Want to Learn</strong>
-      </div>
-      <div class="list-group-item" ng-repeat="tab in vm.listTabs.wantToLearn track by tab.id">
-        {{ tab.songName }} | {{ tab.artistName}} | {{ tab.type }}
+      <div class="clearfix"></div>
+      <div class="btn-group pull-right">
+        <label class="btn btn-primary">All</label>
+        <label class="btn btn-default">Currently Learning</label>
+        <label class="btn btn-default">Learned</label>
+        <label class="btn btn-default">Plan to Learn</label>
       </div>
     </div>
   </div>
 
+  <!-- Tab list -->
+  <div class="row">
+    <div class="list-group">
+
+      <!-- List headers -->
+      <div class="list-group-item">
+        Song | Artist | Type
+      </div>
+
+      <div ng-repeat="(progressId, tabs) in vm.tabs | groupBy: 'progressId'">
+        <div class="list-group-item list-group-item-info">
+          <strong>{{ vm.tabProgresses[progressId - 1].name }}</strong>
+        </div>
+        <div class="list-group-item" ng-repeat="tab in tabs track by tab.id">
+          {{ tab.songName }} | {{ tab.artistName}} | {{ vm.tabTypes[tab.typeId - 1].name }}
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
