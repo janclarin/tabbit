@@ -17,7 +17,6 @@
 
         vm.createTabModal = createTabModal;
         vm.saveTab = saveTab;
-        vm.getTabCount = getTabCount;
         vm.list = null;
         vm.listId = $stateParams.listId; // Get list object from state params.
         vm.listOwner = null;
@@ -28,7 +27,7 @@
         activate();
 
         function activate() {
-            // Get list of tabs for each category.
+            // Get list and list owner information.
             listService.get(vm.listId)
                 .then(function (list) {
                     vm.list = list;
@@ -36,18 +35,24 @@
                         .then(function (user) {
                             vm.listOwner = user;
                         });
-                    tabProgressService.query()
-                        .then(function (tabProgresses) {
-                            vm.tabProgresses = tabProgresses;
-                        });
-                    tabTypeService.query()
-                        .then(function (tabTypes) {
-                            vm.tabTypes = tabTypes;
-                        });
-                    tabService.query(list.id)
-                        .then(function (tabs) {
-                            vm.tabs = tabs;
-                        });
+                });
+
+            // Get all tabs for this list.
+            tabService.query(vm.listId)
+                .then(function (tabs) {
+                    vm.tabs = tabs;
+                });
+
+            // Get tab progresses.
+            tabProgressService.query()
+                .then(function (tabProgresses) {
+                    vm.tabProgresses = tabProgresses;
+                });
+
+            // Get tab types.
+            tabTypeService.query()
+                .then(function (tabTypes) {
+                    vm.tabTypes = tabTypes;
                 });
         }
 
@@ -92,14 +97,6 @@
                 })
                 .catch(function(error) {
                 });
-        }
-
-        /**
-         * Sums the list of tabs.
-         * @returns {number} total number of tabs.
-         */
-        function getTabCount() {
-            return vm.tabsLearning.length + vm.tabsLearned.length + vm.tabsPlanToLearn.length;
         }
     }
 })();
