@@ -56,26 +56,20 @@
                 });
         }
 
-        function getListTabsByProgress(listId, progressId) {
-            return tabService.query(listId)
-                .then(function (tabs) {
-                });
-        }
-
-        function getListOwner(ownerId) {
-            // Get owner information.
-            return userService.get(ownerId)
-                .then(function(user) {
-                    vm.listOwner = user;
-                });
-        }
-
         function createTabModal() {
             var modalInstance = $uibModal.open({
                 animation: true,
-                templateUrl: 'app/modals/modal-create-tab.html',
-                controller: 'ModalController',
-                controllerAs: 'vm'
+                templateUrl: 'app/modals/tab-model.html',
+                controller: 'TabModalController',
+                controllerAs: 'vm',
+                resolve: {
+                    tabProgresses: function () {
+                        return vm.tabProgresses;
+                    },
+                    tabTypes: function () {
+                        return vm.tabTypes;
+                    }
+                }
             });
 
             modalInstance.result
@@ -87,13 +81,7 @@
         function saveTab(tab, listId) {
             return tabService.saveTab(tab, listId)
                 .then(function(tab) {
-                    if (tab.progress === 'learning') {
-                        vm.listTabs.learning.push(tab);
-                    } else if (tab.progress === 'learned') {
-                        vm.listTabs.learned.push(tab);
-                    } else {
-                        vm.listTabs.wantToLearn.push(tab);
-                    }
+                    vm.tabs.push(tab); // Add the tab to the end of the list.
                 })
                 .catch(function(error) {
                 });

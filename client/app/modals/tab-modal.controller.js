@@ -6,15 +6,18 @@
 
     angular
         .module('app')
-        .controller('ModalController', ModalController);
+        .controller('TabModalController', TabModalController);
 
-    ModalController.$inject = ['$uibModalInstance'];
+    TabModalController.$inject = ['$uibModalInstance', 'tabProgresses', 'tabTypes'];
 
-    function ModalController($uibModalInstance) {
+    function TabModalController($uibModalInstance, tabProgresses, tabTypes) {
         var vm = this;
 
         vm.confirm = confirm;
         vm.cancel = cancel;
+        vm.tabProgresses = tabProgresses;
+        vm.tabTypes = tabTypes;
+        vm.modalForm = {};
 
         function confirm() {
             $uibModalInstance.close(vm.modalForm);

@@ -2,41 +2,41 @@
 <div class="list-container">
   <!-- Page header -->
   <div class="row">
-    <div class="col-lg-6">
+    <div class="col-xs-7 col-sm-5">
       <h3 class="">{{ vm.list.name }}</h3>
       <p>{{ vm.listOwner.username }} - {{ vm.tabs.length }} song{{ vm.tabs.length !== 1 ? 's' : ''; }}</p>
     </div>
-    <div class="col-lg-6">
+    <div class="col-xs-5 col-sm-7">
       <div class="pull-right">
         <button type="button" class="btn btn-primary" ng-click="vm.createTabModal()">Add Song</button>
-      </div>
-      <div class="clearfix"></div>
-      <div class="btn-group pull-right">
-        <label class="btn btn-primary">All</label>
-        <label class="btn btn-default">Currently Learning</label>
-        <label class="btn btn-default">Learned</label>
-        <label class="btn btn-default">Plan to Learn</label>
       </div>
     </div>
   </div>
 
   <!-- Tab list -->
   <div class="row">
-    <div class="list-group">
-
-      <!-- List headers -->
-      <div class="list-group-item">
-        Song | Artist | Type
-      </div>
-
+    <div class="col-xs-12">
       <div ng-repeat="(progressId, tabs) in vm.tabs | groupBy: 'progressId'">
-        <div class="list-group-item list-group-item-info">
-          <strong>{{ vm.tabProgresses[progressId - 1].name }}</strong>
-        </div>
-        <div class="list-group-item" ng-repeat="tab in tabs track by tab.id">
-          {{ tab.songName }} | {{ tab.artistName}} | {{ vm.tabTypes[tab.typeId - 1].name }}
-        </div>
+        <h4>{{ vm.tabProgresses[progressId - 1].name }}</h4>
+        <table class="table table-bordered table-hover">
+          <thead>
+          <tr>
+            <th class="col-xs-5">Song</th>
+            <th class="col-xs-4">Artist</th>
+            <th class="col-xs-2">Type</th>
+            <th class="col-xs-1"></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr ng-repeat="tab in tabs | orderBy: 'songName' track by tab.id">
+            <td>{{ tab.songName }}</td>
+            <td>{{ tab.artistName }}</td>
+            <td>{{ vm.tabTypes[tab.typeId - 1].name }}</td>
+            <td>Actions</td>
+          </tr>
+          </tbody>
+        </table>
       </div>
-    </div>
-  </div>
-</div>
+    </div><!-- /col-xs-12 -->
+  </div><!-- /.row -->
+</div><!-- /.list-container -->

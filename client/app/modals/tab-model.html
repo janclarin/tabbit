@@ -17,22 +17,17 @@
     </div>
     <div class="form-group">
       <label for="input-type">Type</label>
-      <select class="form-control" id="input-type" name="type"
-              ng-init="vm.modalForm.type = 'tab'"
-              ng-model="vm.modalForm.type" required>
-        <option>tab</option>
-        <option>chords</option>
-        <option>sheet</option>
+      <select class="form-control" id="input-type" name="type" ng-init="vm.modalForm.typeId = '1'" ng-model="vm.modalForm.typeId" required>
+        <option ng-repeat="type in vm.tabTypes"
+                ng-selected="type.id === vm.modalForm.typeId"
+                value="{{ type.id }}"> {{ type.name }} </option>
       </select>
     </div>
     <div class="form-group">
       <label for="input-progress">Progress</label>
-      <select class="form-control" id="input-progress" name="progress"
-              ng-init="vm.modalForm.progress = 'learning'"
-              ng-model="vm.modalForm.progress" required>
-        <option>learning</option>
-        <option>learned</option>
-        <option>want-to-learn</option>
+      <select class="form-control" id="input-progress" name="progress" ng-init="vm.modalForm.progressId = '1'" ng-model="vm.modalForm.progressId" required>
+        <option ng-repeat="progress in vm.tabProgresses" ng-selected="progress.id === vm.modalForm.progressId"
+                value="{{ progress.id }}"> {{ progress.name }} </option>
       </select>
     </div>
   </div>
