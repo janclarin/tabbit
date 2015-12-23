@@ -8,7 +8,7 @@
     </div>
     <div class="col-xs-5 col-sm-7">
       <div class="pull-right">
-        <button type="button" class="btn btn-primary" ng-click="vm.createTabModal()">Add Song</button>
+        <button type="button" class="btn btn-primary btn-add-song" ng-click="vm.createTabModal()">Add Song</button>
       </div>
     </div>
   </div>
@@ -28,7 +28,8 @@
           </tr>
           </thead>
           <tbody>
-          <tr ng-repeat="tab in tabs | orderBy: 'songName' track by tab.id">
+          <tr ng-repeat="tab in tabs | orderBy: 'songName' track by tab.id"
+          >
             <td>{{ tab.songName }}</td>
             <td>{{ tab.artistName }}</td>
             <td>{{ vm.tabTypes[tab.typeId - 1].name }}</td>
