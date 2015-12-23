@@ -8,13 +8,14 @@
         .module('app')
         .controller('ListDetailController', ListDetailController);
 
-    ListDetailController.$inject = ['$stateParams', '$uibModal', 'listService', 'tabService', 'tabProgressService',
+    ListDetailController.$inject = ['$state', '$stateParams', '$uibModal', 'listService', 'tabService', 'tabProgressService',
         'tabTypeService', 'userService'];
 
-    function ListDetailController($stateParams, $uibModal, listService, tabService, tabProgressService, tabTypeService,
+    function ListDetailController($state, $stateParams, $uibModal, listService, tabService, tabProgressService, tabTypeService,
                                   userService) {
         var vm = this;
 
+        vm.viewTabSource = viewTabSource;
         vm.createTabModal = createTabModal;
         vm.saveTab = saveTab;
         vm.list = null;
@@ -54,6 +55,14 @@
                 .then(function (tabTypes) {
                     vm.tabTypes = tabTypes;
                 });
+        }
+
+        /**
+         * Opens the source in a new page.
+         * @param tabId
+         */
+        function viewTabSource(tabId) {
+            $state.go('tabs-source', { listId: vm.listId, tabId: tabId });
         }
 
         function createTabModal() {

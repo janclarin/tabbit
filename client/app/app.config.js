@@ -53,7 +53,13 @@
                 controllerAs: 'vm',
                 access: { restricted: false }
             })
-        ;
+            .state('tabs-source', {
+                url: '/lists/:listId/tabs/:tabId',
+                templateUrl: 'app/tabs/tab-source.html',
+                controller: 'TabSourceController',
+                controllerAs: 'vm',
+                access: { restricted: false}
+            });
     }
 
     function run($rootScope, $location, $state, authService) {
