@@ -29,9 +29,9 @@
             });
         }
 
-        function get(tabId, listId) {
+        function get(tabId) {
             return $http.get(
-                apiUrl + '/lists/' + listId + '/tabs/' + tabId
+                apiUrl + '/tabs/' + tabId
             ).then(function (response) {
                 return response.data;
             });
@@ -46,9 +46,9 @@
             });
         }
 
-        function remove(tabId, listId) {
+        function remove(tabId) {
             return $http.delete(
-                apiUrl + '/lists/' + listId + '/tabs/' + tabId
+                apiUrl + '/tabs/' + tabId
             );
         }
     }
