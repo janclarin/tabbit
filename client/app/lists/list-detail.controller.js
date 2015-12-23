@@ -59,7 +59,7 @@
         function createTabModal() {
             var modalInstance = $uibModal.open({
                 animation: true,
-                templateUrl: 'app/modals/tab-model.html',
+                templateUrl: 'app/tabs/tab-modal.html',
                 controller: 'TabModalController',
                 controllerAs: 'vm',
                 resolve: {
