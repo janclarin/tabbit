@@ -13,12 +13,12 @@
     function LogoutController($state, authService) {
         var vm = this;
 
-        vm.logOut = logOut;
+        activate();
 
-        function logOut() {
+        function activate() {
             authService.logOut()
                 .then(function() {
-                    $state.go('login');
+                    $state.go('home');
                 });
         }
     }
