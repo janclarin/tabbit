@@ -12,7 +12,7 @@
       </div>
     </div>
   </div>
-
+  <hr>
   <!-- Tab list -->
   <div class="row">
     <div class="col-xs-12">
@@ -21,19 +21,19 @@
         <table class="table table-bordered table-hover">
           <thead>
           <tr>
+            <th class="col-xs-1"></th>
             <th class="col-xs-5">Song</th>
             <th class="col-xs-4">Artist</th>
             <th class="col-xs-2">Type</th>
-            <th class="col-xs-1"></th>
           </tr>
           </thead>
           <tbody>
           <tr ng-repeat="tab in tabs | orderBy: 'songName' track by tab.id"
               ng-click="vm.viewTabSource(tab.id)">
+            <td>{>}</td>
             <td>{{ tab.songName }}</td>
             <td>{{ tab.artistName }}</td>
             <td>{{ vm.tabTypes[tab.typeId - 1].name }}</td>
-            <td>Actions</td>
           </tr>
           </tbody>
         </table>

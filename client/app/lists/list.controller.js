@@ -14,7 +14,7 @@
         var vm = this;
 
         vm.userId = $stateParams.userId; // Get user's ID from state params.
-        vm.lists = []; // User's tabs.
+        vm.lists = []; // User's lists.
         vm.listTabs = {};
 
         activate();
@@ -24,7 +24,7 @@
                 .then(function(lists) {
                     vm.lists = lists;
                     var list = vm.lists[0];
-                    $state.go('lists-detail', { listId: list.id });
+                    $state.go('lists.detail', { listId: list.id });
                 });
         }
     }

@@ -1,0 +1,21 @@
+<!-- Lists page -->
+<div class="lists-container">
+  <div class="row">
+
+    <!-- Lists column -->
+    <div class="col-xs-12 col-sm-3 col-md-2">
+
+      <!-- User's lists -->
+      <h3><small>My lists</small></h3>
+      <div class="list-group">
+        <a class="list-group-item" ng-repeat="list in vm.lists track by list.id">
+          {{ list.name }}
+        </a>
+      </div><!-- /.list-group -->
+    </div><!-- /.col-xs-12 -->
+
+    <!-- List detail column -->
+    <div class="col-xs-12 col-sm-9 col-md-10" ui-view></div>
+
+  </div><!-- /.row -->
+</div><!-- /.lists-container -->

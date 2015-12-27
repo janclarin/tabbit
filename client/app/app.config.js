@@ -41,13 +41,13 @@
             })
             .state('lists', {
                 url: '/users/:userId/lists',
-                // TODO: Add template url for lists.
+                templateUrl: 'app/lists/list.html',
                 controller: 'ListController',
                 controllerAs: 'vm',
                 access: { restricted: false }
             })
-            .state('lists-detail', {
-                url: '/lists/:listId/tabs',
+            .state('lists.detail', {
+                url: '/:listId/tabs',
                 templateUrl: 'app/lists/list-detail.html',
                 controller: 'ListDetailController',
                 controllerAs: 'vm',
