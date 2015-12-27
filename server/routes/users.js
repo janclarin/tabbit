@@ -96,7 +96,7 @@ function getUserLists(req, res) {
 function postUserList(req, res) {
     var name = req.body.name,
         isPrivate = req.body.isPrivate,
-        userId = req.body.userId;
+        userId = req.params.userId;
 
     models.List.create({
         name: name,
