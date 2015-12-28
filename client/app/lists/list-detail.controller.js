@@ -8,11 +8,11 @@
         .module('app')
         .controller('ListDetailController', ListDetailController);
 
-    ListDetailController.$inject = ['$state', '$stateParams', '$uibModal', 'listService', 'tabService', 'tabProgressService',
-        'tabTypeService', 'userService'];
+    ListDetailController.$inject = ['$state', '$stateParams', '$uibModal', 'listService', 'tabService',
+        'tabProgressService', 'tabTypeService', 'userService'];
 
-    function ListDetailController($state, $stateParams, $uibModal, listService, tabService, tabProgressService, tabTypeService,
-                                  userService) {
+    function ListDetailController($state, $stateParams, $uibModal, listService, tabService, tabProgressService,
+                                  tabTypeService, userService) {
         var vm = this;
 
         vm.viewTabSource = viewTabSource;
@@ -89,7 +89,10 @@
 
             modalInstance.result
                 .then(function(tab) {
-                    vm.saveTab(tab, vm.listId);
+                    return vm.saveTab(tab, vm.listId);
+                })
+                .catch(function(err) {
+                    // TODO: Display error - error saving tab.
                 });
         }
 
