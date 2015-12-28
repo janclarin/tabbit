@@ -9,9 +9,10 @@ var express = require('express'),
 
 router.route('/tabs/:tabId')
     .get(getTab)
+    .put(putTab)
     .delete(deleteTab);
 
-// Get a tab from a list.
+// Get a tab.
 function getTab(req, res) {
     var tabId = req.params.tabId;
 
@@ -27,7 +28,35 @@ function getTab(req, res) {
     })
 }
 
-// Delete a tab from a list.
+// Update a tab.
+function putTab(req, res) {
+    var songName = req.body.songName,
+        artistName = req.body.artistName,
+        source = req.body.source,
+        typeId = req.body.typeId,
+        progressId = req.body.progressId,
+        tabId = req.params.tabId;
+
+    models.Tab.update({
+        songName: songName,
+        artistName: artistName,
+        source: source,
+        typeId: typeId,
+        progressId: progressId
+    }, {
+        where: {
+            id: tabId
+        }
+    }).then(function () {
+        // TODO: Handle success properly.
+        res.status(204).json();
+    }).catch(function (error) {
+        // TODO: Handle error properly.
+        res.status(500).json({error: error});
+    });
+}
+
+// Delete a tab.
 function deleteTab(req, res) {
     var tabId = req.params.tabId;
 
@@ -35,7 +64,7 @@ function deleteTab(req, res) {
         where: {
             id: tabId
         }
-    }).then(function (affectedRows) {
+    }).then(function () {
         res.status(204).json(); // TODO: Handle success properly.
     }).catch(function (error) {
         // TODO: Handle error properly.
