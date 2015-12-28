@@ -14,13 +14,14 @@
         var apiUrl = '/api/v1';
 
         return {
-            saveTab: saveTab,
+            save: save,
             get: get,
             query: query,
+            update: update,
             remove: remove
         };
 
-        function saveTab(tab, listId) {
+        function save(tab, listId) {
             return $http.post(
                 apiUrl + '/lists/' + listId + '/tabs',
                 tab
@@ -46,10 +47,21 @@
             });
         }
 
+        function update(tab) {
+            return $http.put(
+                apiUrl + '/tabs/' + tab.id,
+                tab
+            ).then(function (response) {
+                return response.data;
+            });
+        }
+
         function remove(tabId) {
             return $http.delete(
                 apiUrl + '/tabs/' + tabId
-            );
+            ).then(function (response) {
+                return response.data;
+            });
         }
     }
 })();
