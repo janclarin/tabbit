@@ -103,7 +103,7 @@
          * @returns {*} A promise.
          */
         function saveTab(tab, listId) {
-            return tabService.saveTab(tab, listId)
+            return tabService.save(tab, listId)
                 .then(function(tab) {
                     vm.tabs.push(tab); // Add the tab to the end of the list.
                 });
