@@ -58,13 +58,19 @@
         }
 
         /**
-         * Opens the source in a new page.
-         * @param tabId
+         * Opens the source in a new page if the tab has one.
+         * @param tab The tab to view the source of.
          */
-        function viewTabSource(tabId) {
-            $state.go('tabs-source', { listId: vm.listId, tabId: tabId });
+        function viewTabSource(tab) {
+            if (tab.source) {
+                // Pass the list ID to know which list to return to.
+                $state.go('tabs-source', { listId: vm.listId, tabId: tab.id });
+            }
         }
 
+        /**
+         * Opens an instance of the tab modal.
+         */
         function createTabModal() {
             var modalInstance = $uibModal.open({
                 animation: true,
@@ -87,12 +93,16 @@
                 });
         }
 
+        /**
+         * Saves a tab in the database.
+         * @param tab The tab to save.
+         * @param listId The ID of the list to add the tab to.
+         * @returns {*} A promise.
+         */
         function saveTab(tab, listId) {
             return tabService.saveTab(tab, listId)
                 .then(function(tab) {
                     vm.tabs.push(tab); // Add the tab to the end of the list.
-                })
-                .catch(function(error) {
                 });
         }
     }

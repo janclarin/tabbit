@@ -8,7 +8,8 @@
       <!-- User's lists -->
       <h3><small>My lists</small></h3>
       <div class="list-group">
-        <a class="list-group-item" ng-repeat="list in vm.lists track by list.id">
+        <a class="list-group-item" ng-repeat="list in vm.lists track by list.id"
+           ng-class="{ 'list-group-item-info': vm.selectedListId === list.id }" ng-click="vm.viewList(list.id)">
           {{ list.name }}
         </a>
       </div><!-- /.list-group -->

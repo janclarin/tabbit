@@ -18,22 +18,27 @@
     <div class="col-xs-12">
       <div ng-repeat="(progressId, tabs) in vm.tabs | groupBy: 'progressId'">
         <h4>{{ vm.tabProgresses[progressId - 1].name }}</h4>
-        <table class="table table-bordered table-hover">
+        <table class="table table-hover">
           <thead>
           <tr>
             <th class="col-xs-1"></th>
-            <th class="col-xs-5">Song</th>
+            <th class="col-xs-4">Song</th>
             <th class="col-xs-4">Artist</th>
             <th class="col-xs-2">Type</th>
+            <th class="col-xs-1"></th>
           </tr>
           </thead>
           <tbody>
           <tr ng-repeat="tab in tabs | orderBy: 'songName' track by tab.id"
-              ng-click="vm.viewTabSource(tab.id)">
-            <td>{>}</td>
+              ng-click="vm.viewTabSource(tab)">
+            <td>
+              <!-- Only display play icon if the tab has a source -->
+              <i class="fa fa-play-circle" ng-if="!!tab.source"></i>
+            </td>
             <td>{{ tab.songName }}</td>
             <td>{{ tab.artistName }}</td>
             <td>{{ vm.tabTypes[tab.typeId - 1].name }}</td>
+            <td><i class="fa fa-ellipsis-h"></i></td>
           </tr>
           </tbody>
         </table>
