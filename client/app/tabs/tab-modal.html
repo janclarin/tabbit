@@ -1,38 +1,37 @@
 <form class="form" ng-submit="vm.confirm()">
   <div class="modal-header">
-    <h3 class="modal-title">Add song</h3>
+    <h4 class="modal-title">{{ ::vm.modalTitle }}</h4>
   </div>
   <div class="modal-body">
     <div class="form-group">
       <label for="input-song">Song</label>
-      <input type="text" class="form-control" id="input-song" name="song" ng-model="vm.modalForm.songName" required autofocus>
+      <input type="text" class="form-control" id="input-song" name="song" ng-model="vm.tab.songName" required autofocus>
     </div>
     <div class="form-group">
       <label for="input-artist">Artist</label>
-      <input type="text" class="form-control" id="input-artist" name="artist" ng-model="vm.modalForm.artistName" required>
+      <input type="text" class="form-control" id="input-artist" name="artist" ng-model="vm.tab.artistName" required>
     </div>
     <div class="form-group">
       <label for="input-source">Source link/attachment</label>
-      <input type="text" class="form-control" id="input-source" name="source" ng-model="vm.modalForm.source">
+      <input type="text" class="form-control" id="input-source" name="source" ng-model="vm.tab.source">
     </div>
     <div class="form-group">
       <label for="input-type">Type</label>
-      <select class="form-control" id="input-type" name="type" ng-init="vm.modalForm.typeId = '1'" ng-model="vm.modalForm.typeId" required>
-        <option ng-repeat="type in vm.tabTypes"
-                ng-selected="type.id === vm.modalForm.typeId"
-                value="{{ type.id }}"> {{ type.name }} </option>
+      <select class="form-control" id="input-type" name="type" required
+              ng-model="vm.selectedType"
+              ng-options="type as type.name for type in vm.tabTypes track by type.id">
       </select>
     </div>
     <div class="form-group">
       <label for="input-progress">Progress</label>
-      <select class="form-control" id="input-progress" name="progress" ng-init="vm.modalForm.progressId = '1'" ng-model="vm.modalForm.progressId" required>
-        <option ng-repeat="progress in vm.tabProgresses" ng-selected="progress.id === vm.modalForm.progressId"
-                value="{{ progress.id }}"> {{ progress.name }} </option>
+      <select class="form-control" id="input-progress" name="progress" required
+              ng-model="vm.selectedProgress"
+              ng-options="progress as progress.name for progress in vm.tabProgresses track by progress.id">
       </select>
     </div>
   </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-default" ng-click="vm.cancel()">Cancel</button>
-    <button type="submit" class="btn btn-primary">Create</button>
+    <button type="submit" class="btn btn-primary">{{ ::vm.modalConfirmText }}</button>
   </div>
 </form>
