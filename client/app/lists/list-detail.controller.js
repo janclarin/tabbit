@@ -17,7 +17,11 @@
 
         vm.viewTabSource = viewTabSource;
         vm.createTabModal = createTabModal;
+        vm.editTabModal = editTabModal;
+        vm.deleteTabModal = deleteTabModal;
         vm.saveTab = saveTab;
+        vm.editTab = editTab;
+        vm.deleteTab = deleteTab;
         vm.list = null;
         vm.listId = $stateParams.listId; // Get list object from state params.
         vm.listOwner = null;
@@ -69,15 +73,25 @@
         }
 
         /**
-         * Opens an instance of the tab modal.
+         * Opens an modal instance and returns its reference.
+         * @param isAnimationEnabled Boolean for modal opening animation.
+         * @param modalContents Object containing text fields for the modal.
+         * @param tab The tab object to apply changes to. Can be an empty object (new tab).
+         * @returns {*} Modal instance.
          */
-        function createTabModal() {
-            var modalInstance = $uibModal.open({
-                animation: true,
+        function createTabModalInstance(isAnimationEnabled, modalContents, tab) {
+            return $uibModal.open({
+                animation: isAnimationEnabled,
                 templateUrl: 'app/tabs/tab-modal.html',
                 controller: 'TabModalController',
                 controllerAs: 'vm',
                 resolve: {
+                    modalContents: function () {
+                        return modalContents;
+                    },
+                    tab: function () {
+                        return tab;
+                    },
                     tabProgresses: function () {
                         return vm.tabProgresses;
                     },
@@ -86,13 +100,76 @@
                     }
                 }
             });
+        }
+
+        /**
+         * Displays a modal for creating a new tab.
+         */
+        function createTabModal() {
+            var modalContents = {
+                title: 'Add song',
+                confirmText: 'Confirm'
+            };
+            var modalInstance = createTabModalInstance(true, modalContents, {});
 
             modalInstance.result
-                .then(function(tab) {
+                .then(function (tab) {
                     return vm.saveTab(tab, vm.listId);
                 })
-                .catch(function(err) {
+                .catch(function (err) {
                     // TODO: Display error - error saving tab.
+                });
+        }
+
+        /**
+         * Displays a modal for editing a tab.
+         * @param tab The tab to edit.
+         */
+        function editTabModal(tab) {
+            var modalContents = {
+                title: 'Edit song',
+                confirmText: 'Update'
+            };
+            var modalInstance = createTabModalInstance(true, modalContents, tab);
+
+            modalInstance.result
+                .then(function (updatedTab) {
+                    return vm.editTab(updatedTab);
+                })
+                .catch(function (err) {
+                    // TODO: Handle error.
+                });
+        }
+
+        /**
+         * Displays a confirmation modal for deleting a tab.
+         * @param tab The tab to delete.
+         */
+        function deleteTabModal(tab) {
+            var modalInstance = $uibModal.open({
+                animation: true,
+                size: 'sm',
+                templateUrl: 'app/components/confirmation-modal.html',
+                controller: 'ConfirmationModalController',
+                controllerAs: 'vm',
+                resolve: {
+                    modalContents: function () {
+                        // The modal fields.
+                        return {
+                            title: 'Are you sure?',
+                            body: 'This item will be permanently deleted.',
+                            confirmText: 'Delete'
+                        };
+                    }
+                }
+            });
+
+            modalInstance.result
+                .then(function () {
+                    return vm.deleteTab(tab);
+                })
+                .catch(function (err) {
+                    // TODO: Handle error when deleting a tab.
                 });
         }
 
@@ -104,8 +181,45 @@
          */
         function saveTab(tab, listId) {
             return tabService.save(tab, listId)
-                .then(function(tab) {
+                .then(function (tab) {
                     vm.tabs.push(tab); // Add the tab to the end of the list.
+                });
+        }
+
+        /**
+         * Updates a tab in the database and updates it in the local list.
+         * @param tab The tab with new information.
+         * @returns {*}
+         */
+        function editTab(tab) {
+            return tabService.update(tab)
+                .then(function () {
+                    // Find the tab and replace it in the list.
+                    for (var i = 0; i < vm.tabs.length; i++) {
+                        if (vm.tabs[i].id === tab.id) {
+                            vm.tabs.splice(i, 1); // Remove the old tab.
+                            vm.tabs.push(tab); // Add the updated tab.
+                            break;
+                        }
+                    }
+                });
+        }
+
+        /**
+         * Deletes a tab in the database and removes it from the local list.
+         * @param tab The tab to be deleted.
+         * @returns {*}
+         */
+        function deleteTab(tab) {
+            return tabService.remove(tab.id)
+                .then(function () {
+                    // Find the tab and remove it from the list.
+                    for (var i = 0; i < vm.tabs.length; i++) {
+                        if (vm.tabs[i].id === tab.id) {
+                            vm.tabs.splice(i, 1); // Remove the the old tab.
+                            break;
+                        }
+                    }
                 });
         }
     }

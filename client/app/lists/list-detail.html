@@ -29,16 +29,26 @@
           </tr>
           </thead>
           <tbody>
-          <tr ng-repeat="tab in tabs | orderBy: 'songName' track by tab.id"
-              ng-click="vm.viewTabSource(tab)">
-            <td>
+          <tr ng-repeat="tab in tabs | orderBy: 'songName' track by tab.id">
+            <td ng-click="vm.viewTabSource(tab)">
               <!-- Only display play icon if the tab has a source -->
-              <i class="fa fa-play-circle" ng-if="!!tab.source"></i>
+              <i class="fa fa-lg fa-play-circle" ng-if="!!tab.source"></i>
             </td>
             <td>{{ tab.songName }}</td>
             <td>{{ tab.artistName }}</td>
             <td>{{ vm.tabTypes[tab.typeId - 1].name }}</td>
-            <td><i class="fa fa-ellipsis-h"></i></td>
+            <td>
+              <!-- Tab overflow dropdown -->
+              <div class="dropdown">
+                <button type="button" data-toggle="dropdown">
+                  <i class="fa fa-ellipsis-h"></i>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-right">
+                  <li ng-click="vm.editTabModal(tab)"><a>Edit</a></li>
+                  <li ng-click="vm.deleteTabModal(tab)"><a>Delete</a></li>
+                </ul>
+              </div><!-- /.dropdown -->
+            </td>
           </tr>
           </tbody>
         </table>
