@@ -1,7 +1,7 @@
 /**
  * Modal controller.
  */
-(function() {
+(function () {
     'use strict';
 
     angular
@@ -15,10 +15,9 @@
 
         vm.confirm = confirm;
         vm.cancel = cancel;
+        vm.modalContents = modalContents;
         vm.tabProgresses = tabProgresses;
         vm.tabTypes = tabTypes;
-        vm.modalTitle = modalContents.title;
-        vm.modalConfirmText = modalContents.confirmText;
         vm.tab = tab;
         vm.selectedType = (tab.typeId) ? tabTypes[tab.typeId - 1] : tabTypes[0];
         vm.selectedProgress = (tab.progressId) ? tabProgresses[tab.progressId - 1] : tabProgresses[0];

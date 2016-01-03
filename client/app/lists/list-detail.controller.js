@@ -16,6 +16,7 @@
         var vm = this;
 
         vm.viewTabSource = viewTabSource;
+        vm.createTabModalInstance = createTabModalInstance;
         vm.createTabModal = createTabModal;
         vm.editTabModal = editTabModal;
         vm.deleteTabModal = deleteTabModal;
@@ -157,7 +158,7 @@
                         // The modal fields.
                         return {
                             title: 'Are you sure?',
-                            body: 'This item will be permanently deleted.',
+                            body: 'This song will be permanently deleted.',
                             confirmText: 'Delete'
                         };
                     }
@@ -181,15 +182,15 @@
          */
         function saveTab(tab, listId) {
             return tabService.save(tab, listId)
-                .then(function (tab) {
-                    vm.tabs.push(tab); // Add the tab to the end of the list.
+                .then(function (createdTab) {
+                    vm.tabs.push(createdTab); // Add the tab to the end of the list.
                 });
         }
 
         /**
          * Updates a tab in the database and updates it in the local list.
          * @param tab The tab with new information.
-         * @returns {*}
+         * @returns {*} A promise.
          */
         function editTab(tab) {
             return tabService.update(tab)
@@ -197,8 +198,7 @@
                     // Find the tab and replace it in the list.
                     for (var i = 0; i < vm.tabs.length; i++) {
                         if (vm.tabs[i].id === tab.id) {
-                            vm.tabs.splice(i, 1); // Remove the old tab.
-                            vm.tabs.push(tab); // Add the updated tab.
+                            vm.tabs[i] = tab; // Replace the old tab.
                             break;
                         }
                     }
@@ -208,7 +208,7 @@
         /**
          * Deletes a tab in the database and removes it from the local list.
          * @param tab The tab to be deleted.
-         * @returns {*}
+         * @returns {*} A promise.
          */
         function deleteTab(tab) {
             return tabService.remove(tab.id)
@@ -216,7 +216,7 @@
                     // Find the tab and remove it from the list.
                     for (var i = 0; i < vm.tabs.length; i++) {
                         if (vm.tabs[i].id === tab.id) {
-                            vm.tabs.splice(i, 1); // Remove the the old tab.
+                            vm.tabs.splice(i, 1); // Remove the tab locally.
                             break;
                         }
                     }
