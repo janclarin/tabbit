@@ -111,7 +111,11 @@
                 title: 'Add song',
                 confirmText: 'Confirm'
             };
-            var modalInstance = createTabModalInstance(true, modalContents, {});
+            var modalInstance = createTabModalInstance(
+                true,
+                modalContents,
+                {}
+            );
 
             modalInstance.result
                 .then(function (tab) {
@@ -131,7 +135,11 @@
                 title: 'Edit song',
                 confirmText: 'Update'
             };
-            var modalInstance = createTabModalInstance(true, modalContents, tab);
+            var modalInstance = createTabModalInstance(
+                true,
+                modalContents,
+                angular.copy(tab) // Copy so changes aren't reflected in the list.
+            );
 
             modalInstance.result
                 .then(function (updatedTab) {
