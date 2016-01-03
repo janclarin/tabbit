@@ -5,15 +5,18 @@
   <div class="modal-body">
     <div class="form-group">
       <label for="input-song">Song</label>
-      <input type="text" class="form-control" id="input-song" name="song" ng-model="vm.tab.songName" required autofocus>
+      <input type="text" class="form-control" id="input-song" name="song" placeholder="e.g. Blackbird"
+             ng-model="vm.tab.songName" required autofocus>
     </div>
     <div class="form-group">
       <label for="input-artist">Artist</label>
-      <input type="text" class="form-control" id="input-artist" name="artist" ng-model="vm.tab.artistName" required>
+      <input type="text" class="form-control" id="input-artist" name="artist" placeholder="e.g. The Beatles"
+             ng-model="vm.tab.artistName" required>
     </div>
     <div class="form-group">
       <label for="input-source">Source link/attachment</label>
-      <input type="text" class="form-control" id="input-source" name="source" ng-model="vm.tab.source">
+      <input type="text" class="form-control" id="input-source" name="source" placeholder="e.g. https://tabs.ultimate-guitar.com/t/the_beatles/blackbird_ver5_tab.htm"
+             ng-model="vm.tab.source">
     </div>
     <div class="form-group">
       <label for="input-type">Type</label>
