@@ -1,0 +1,22 @@
+<!-- Template for list modal -->
+<form class="form" ng-submit="vm.confirm()">
+  <div class="modal-header">
+    <h4 class="modal-title">{{ ::vm.modalContents.title }}</h4>
+  </div>
+  <div class="modal-body">
+    <div class="form-group">
+      <label for="input-name">Name</label>
+      <input type="text" class="form-control" id="input-name" name="name" ng-model="vm.list.name" required autofocus>
+    </div>
+    <div class="checkbox">
+      <label>
+        <input type="checkbox" id="input-is-private" name="is-private"
+               ng-model="vm.list.isPrivate" ng-checked="vm.list.isPrivate">Private
+      </label>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-default" ng-click="vm.cancel()">Cancel</button>
+    <button type="submit" class="btn btn-primary">{{ ::vm.modalContents.confirmText }}</button>
+  </div>
+</form>
