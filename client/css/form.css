@@ -1,0 +1,11 @@
+/* Forms */
+.form-register,
+.form-login {
+  max-width: 350px;
+  padding: 0 15px 20px 15px;
+  margin: 50px auto;
+}
+
+.form-login .btn-register {
+  margin-top: 10px;
+}

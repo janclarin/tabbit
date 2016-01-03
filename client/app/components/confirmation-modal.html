@@ -1,0 +1,12 @@
+<form class="form" ng-submit="vm.confirm()">
+  <div class="modal-header">
+    <h4 class="modal-title">{{ ::vm.modalTitle }}</h4>
+  </div>
+  <div class="modal-body">
+    {{ ::vm.modalBody }}
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-default" ng-click="vm.cancel()">Cancel</button>
+    <button type="submit" class="btn btn-primary">{{ ::vm.modalConfirmText }}</button>
+  </div>
+</form>

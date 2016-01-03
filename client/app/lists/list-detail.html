@@ -1,0 +1,58 @@
+<!-- List Detail page -->
+<div class="list-container">
+  <!-- Page header -->
+  <div class="row">
+    <div class="col-xs-7 col-sm-5">
+      <h3 class="">{{ vm.list.name }}</h3>
+      <p>{{ vm.listOwner.username }} - {{ vm.tabs.length }} song{{ vm.tabs.length !== 1 ? 's' : ''; }}</p>
+    </div>
+    <div class="col-xs-5 col-sm-7">
+      <div class="pull-right">
+        <button type="button" class="btn btn-primary btn-add-song" ng-click="vm.createTabModal()">Add Song</button>
+      </div>
+    </div>
+  </div>
+  <hr>
+  <!-- Tab list -->
+  <div class="row">
+    <div class="col-xs-12">
+      <div ng-repeat="(progressId, tabs) in vm.tabs | groupBy: 'progressId'">
+        <h4>{{ vm.tabProgresses[progressId - 1].name }}</h4>
+        <table class="table table-hover">
+          <thead>
+          <tr>
+            <th class="col-xs-1"></th>
+            <th class="col-xs-4">Song</th>
+            <th class="col-xs-4">Artist</th>
+            <th class="col-xs-2">Type</th>
+            <th class="col-xs-1"></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr ng-repeat="tab in tabs | orderBy: 'songName' track by tab.id">
+            <td ng-click="vm.viewTabSource(tab)">
+              <!-- Only display play icon if the tab has a source -->
+              <a href=""><i class="fa fa-lg fa-play-circle" ng-if="!!tab.source"></i></a>
+            </td>
+            <td>{{ tab.songName }}</td>
+            <td>{{ tab.artistName }}</td>
+            <td>{{ vm.tabTypes[tab.typeId - 1].name }}</td>
+            <td>
+              <!-- Tab overflow dropdown -->
+              <div class="dropdown pull-right">
+                <a href="" data-toggle="dropdown">
+                  <i class="fa fa-ellipsis-h"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-right">
+                  <li ng-click="vm.editTabModal(tab)"><a>Edit</a></li>
+                  <li ng-click="vm.deleteTabModal(tab)"><a>Delete</a></li>
+                </ul>
+              </div><!-- /.dropdown -->
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div><!-- /col-xs-12 -->
+  </div><!-- /.row -->
+</div><!-- /.list-container -->

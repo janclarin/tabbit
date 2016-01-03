@@ -1,0 +1,10 @@
+<!-- Tab source page -->
+<div class="tab-container">
+  <!-- Header bar -->
+  <div class="text-center">
+    <h2><small>{{ vm.tab.songName }} - {{ vm.tab.artistName }}</small></h2>
+  </div>
+
+  <!-- Source view -->
+  <iframe ng-if="vm.tabSourceUrl" class="iframe-tab-source" src="{{ vm.tabSourceUrl }}" sandbox></iframe>
+</div>

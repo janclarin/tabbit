@@ -1,2 +1,2 @@
 # Tab Web App
-Website for organizing of tabs from the web and sharing them with friends.
+Website for organizing tabs from the web in a list and sharing your list with others.

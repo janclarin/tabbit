@@ -1,0 +1,9 @@
+'use strict'
+var path = require('path');
+
+module.exports = {
+    'config': path.resolve(__dirname, 'server/config/config.json'),
+    'migration-path': path.resolve(__dirname, 'server/migrations'),
+    'models-path': path.resolve(__dirname, 'server/models'),
+    'seeders-path': path.resolve(__dirname, 'server/seeders')
+}

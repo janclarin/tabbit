@@ -1,0 +1,37 @@
+<!-- Lists page -->
+<div class="lists-container">
+  <div class="row">
+
+    <!-- Lists column -->
+    <div class="col-xs-12 col-sm-4 col-md-3">
+      <!-- User's lists -->
+      <h3>
+        <small>My lists</small>
+        <a class="btn btn-sm pull-right" href="" ng-click="vm.createListModal()">
+          <i class="fa fa-plus"></i>
+        </a>
+      </h3>
+
+      <div class="list-group">
+        <div class="list-group-item" ng-repeat="list in vm.lists track by list.id"
+             ng-class="{ 'list-group-item-info': vm.selectedListId === list.id }"
+             ng-click="vm.viewList(list.id)">
+          {{ list.name }}
+          <span class="pull-right">
+            <a href="" ng-click="vm.editListModal(list); $event.stopPropagation();">
+              <i class="fa fa-pencil"></i>
+            </a>
+            &nbsp;
+            <a href="" ng-click="vm.deleteListModal(list); $event.stopPropagation();">
+              <i class="fa fa-trash"></i>
+            </a>
+          </span>
+        </div><!-- /.list-group-item -->
+      </div><!-- /.list-group -->
+    </div><!-- /.col-xs-12 -->
+
+    <!-- List detail column -->
+    <div class="col-xs-12 col-sm-8 col-md-9" ui-view></div>
+
+  </div><!-- /.row -->
+</div><!-- /.lists-container -->

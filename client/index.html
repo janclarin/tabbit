@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Tabbit</title>
+
+  <!-- Styles -->
+  <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/form.css" rel="stylesheet">
+  <link href="css/list.css" rel="stylesheet">
+  <link href="css/tab-source.css" rel="stylesheet">
+</head>
+<body>
+  <!-- Navigation bar -->
+  <nav class="navbar navbar-default" role="navigation">
+    <div class="container">
+
+      <div class="navbar-header">
+        <!--
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                data-target="#navbar-collapse" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        -->
+        <a class="navbar-brand" ui-sref="home">Tabbit</a>
+      </div><!-- /.navbar-header -->
+
+      <!--
+    <div class="collapse navbar-collapse" id="navbar-collapse">
+      <ul class="nav navbar-nav navbar-right">
+        <!-- User dropdown
+        <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            User <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu">
+            <li><a ui-sref="logout">Log out</a></li>
+          </ul>
+        </li>
+      </ul>
+      </div><!-- /.navbar-collapse -->
+
+    </div><!-- /.container -->
+  </nav>
+
+  <!-- Main content -->
+  <div class="container">
+    <div ui-view></div>
+  </div><!-- /.container -->
+
+  <!-- Scripts -->
+  <script src="bower_components/jquery/dist/jquery.min.js"></script>
+  <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src="bower_components/angular/angular.min.js"></script>
+  <script src="bower_components/angular-filter/dist/angular-filter.min.js"></script>
+  <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+  <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+
+  <!-- Angular -->
+  <!-- Modules -->
+  <script src="app/app.module.js"></script>
+
+  <!-- Services -->
+  <script src="app/services/user.service.js"></script>
+  <script src="app/services/auth.service.js"></script>
+  <script src="app/services/list.service.js"></script>
+  <script src="app/services/tab.service.js"></script>
+  <script src="app/services/tab-progress.service.js"></script>
+  <script src="app/services/tab-type.service.js"></script>
+
+  <!-- Controllers -->
+  <script src="app/components/confirmation-modal.controller.js"></script>
+  <script src="app/tabs/tab-source.controller.js"></script>
+  <script src="app/tabs/tab-modal.controller.js"></script>
+  <script src="app/lists/list-modal.controller.js"></script>
+  <script src="app/lists/list-detail.controller.js"></script>
+  <script src="app/lists/list.controller.js"></script>
+  <script src="app/users/register.controller.js"></script>
+  <script src="app/users/login.controller.js"></script>
+  <script src="app/users/logout.controller.js"></script>
+
+  <!-- Module Configuration -->
+  <script src="app/app.config.js"></script>
+</body>
+</html>
