@@ -96,12 +96,12 @@ function getUserLists(req, res) {
 function postUserList(req, res) {
     var name = req.body.name,
         isPrivate = req.body.isPrivate,
-        userId = req.params.userId;
+        ownerId = req.params.userId;
 
     models.List.create({
         name: name,
         isPrivate: isPrivate,
-        userId: userId
+        ownerId: ownerId
     }).then(function (list) {
         res.status(201).json(list);
     }).catch(function (error) {
