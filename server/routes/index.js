@@ -9,6 +9,10 @@ router.get('/', function(req, res) {
     res.sendFile(path.join(__dirname, '../client', 'index.html'));
 });
 
+router.get('/', function(req, res) {
+    res.sendFile(path.join(__dirname, '../client', 'favicon.ico'));
+});
+
 router.get('/loginFailure', function(req,res, next) {
     res.status(500).json({err: 'Could not log in user.'});
 });
