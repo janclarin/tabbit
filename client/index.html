@@ -88,5 +88,15 @@
 
   <!-- Module Configuration -->
   <script src="app/app.config.js"></script>
+
+  <!-- Doorbell.io feedback tool -->
+  <script type="text/javascript">
+    window.doorbellOptions = {
+      appKey: 'BatFfuE0iZ4YVKDHJ5cALftO2XKrZ0u5lfeEgbkBvb0FsAWXuM7ugUFnHQ4XH2l3'
+    };
+    (function(d, t) {
+      var g = d.createElement(t);g.id = 'doorbellScript';g.type = 'text/javascript';g.async = true;g.src = 'https://embed.doorbell.io/button/2888?t='+(new Date().getTime());(d.getElementsByTagName('head')[0]||d.getElementsByTagName('body')[0]).appendChild(g);
+    }(document, 'script'));
+  </script>
 </body>
 </html>
