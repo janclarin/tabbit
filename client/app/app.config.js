@@ -39,7 +39,7 @@
                 controllerAs: 'vm',
                 access: { restricted: false }
             })
-            .state('lists', {
+           .state('lists', {
                 url: '/users/:userId/lists',
                 templateUrl: 'app/lists/list.html',
                 controller: 'ListController',
@@ -58,7 +58,7 @@
                 templateUrl: 'app/tabs/tab-source.html',
                 controller: 'TabSourceController',
                 controllerAs: 'vm',
-                access: { restricted: false}
+                access: { restricted: false }
             });
     }
 

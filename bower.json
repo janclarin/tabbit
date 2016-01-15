@@ -21,6 +21,7 @@
     "angular": "~1.4.8",
     "angular-bootstrap": "~0.14.3",
     "angular-ui-router": "~0.2.15",
-    "angular-filter": "~0.5.8"
+    "angular-filter": "~0.5.8",
+    "angular-jwt": "~0.0.9"
   }
 }
