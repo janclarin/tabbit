@@ -21,7 +21,7 @@
             authService.logIn(vm.loginForm.username, vm.loginForm.password)
                 .then(function() {
                     // Redirect to list controller.
-                    var userId = authService.getLoggedInUserId();
+                    var userId = authService.getLoggedInUser().id;
                     $state.go('lists', { userId: userId });
                     vm.disabled = false;
                     vm.loginForm = {};

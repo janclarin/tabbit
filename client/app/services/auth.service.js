@@ -8,30 +8,39 @@
         .module('app')
         .factory('authService', authService);
 
-    authService.$inject = ['$q', '$timeout', '$http'];
+    authService.$inject = ['$q', '$window', '$http', 'jwtHelper'];
 
-    function authService($q, $timeout, $http) {
+    function authService($q, $window, $http, jwtHelper) {
 
-        var loggedInUserId;
+        var loggedInUser;
 
         // Create user variable.
         var isUserAuthorized = null;
 
         return {
             isLoggedIn: isLoggedIn,
-            getLoggedInUserId: getLoggedInUserId,
+            getLoggedInUser: getLoggedInUser,
             getUserStatus: getUserStatus,
             register: register,
             logIn: logIn,
             logOut: logOut
         };
 
-        function getLoggedInUserId() {
-            return loggedInUserId;
+        function isValidToken(token) {
+            return token && !jwtHelper.isTokenExpired(token);
+        }
+
+        function getLoggedInUser() {
+            var token = $window.sessionStorage.token;
+            if (!loggedInUser && isValidToken(token)) {
+                loggedInUser = jwtHelper.decodeToken(token);
+            }
+            return loggedInUser;
         }
 
         function isLoggedIn() {
-            return Boolean(isUserAuthorized);
+            var token = $window.sessionStorage.token;
+            return token && !jwtHelper.isTokenExpired(token);
         }
 
         function getUserStatus() {
@@ -77,7 +86,8 @@
                 })
                 .then(function(response) {
                     if (response.status === 200 && response.data) {
-                        loggedInUserId = response.data; // Store user ID.
+                        $window.sessionStorage.token = response.data.token;
+                        loggedInUser = getLoggedInUser(); // Store user ID.
                         isUserAuthorized = true;
                         deferred.resolve();
                     } else {
@@ -100,10 +110,11 @@
             // Send a GET request to the server.
             $http.get('/logout')
                 .then(function(response) {
-                    loggedInUserId = false;
+                    loggedInUser = null;
                     deferred.resolve();
-                }, function(response) {
-                    loggedInUserId = false;
+                })
+                .catch(function(response) {
+                    loggedInUser = null;
                     deferred.reject();
                 });
 
