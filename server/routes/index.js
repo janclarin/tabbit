@@ -3,7 +3,11 @@
 var express = require('express'),
     router = express.Router(),
     passport = require('passport'),
-    models = require('../models/index');
+    models = require('../models/index'),
+    env = process.env.NODE_ENV || 'development',
+    config = require(__dirname + '/../config/config.json')[env],
+    jwt = require('jsonwebtoken'),
+    jwtSecret = process.env.JWT_SECRET || config.jwt_secret;
 
 router.get('/', function(req, res) {
     res.sendFile(path.join(__dirname, '../client', 'index.html'));
@@ -23,9 +27,20 @@ router.get('/loginSuccess/:username', function(req, res, next) {
     models.User.findOne({
         where: {
             username: username
-        }
+        },
+        attributes: [
+            'id', 'email', 'username', 'firstName', 'lastName'
+        ]
     }).then(function(user) {
-        res.status(200).json(user.id); // Send the logged-in user's ID.
+        // Create a token that lasts for a month and send it to the user.
+        var token = jwt.sign(user.dataValues, jwtSecret, {
+            expiresIn: "30d" // A month.
+        });
+
+        // Send the token back.
+        res.status(200).json({
+            token: token
+        });
     }).catch(function(err) {
          // TODO: Use proper error handling.
         res.status(500).json({err: err});

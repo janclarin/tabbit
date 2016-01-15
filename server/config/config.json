@@ -1,12 +1,16 @@
 {
   "development": {
     "dialect": "sqlite",
-    "storage": "./db.development.sqlite"
+    "storage": "./db.development.sqlite",
+    "jwt_secret": "tabbit"
+
   },
   "staging": {
-    "use_env_variable": "DATABASE_URL"
+    "use_env_variable": "DATABASE_URL",
+    "jwt_secret": "ADD_JWT_SECRET_TO_ENV"
   },
   "production": {
-    "use_env_variable": "DATABASE_URL"
+    "use_env_variable": "DATABASE_URL",
+    "jwt_secret": "ADD_JWT_SECRET_TO_ENV"
   }
 }
