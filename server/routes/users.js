@@ -102,10 +102,10 @@ function postUserList(req, res) {
     var name = req.body.name,
         isPrivate = req.body.isPrivate,
         ownerId = req.params.userId,
-        userId = req.user.id;
+        jwtUserId = req.user.id; // User ID from decoded JWT token.
 
     // Ensure that the token's user ID matches the owner ID of list to be created.
-    if (ownerId !== userId) {
+    if (parseInt(ownerId) !== jwtUserId) {
         res.status(401).json("You are not authorized to create a list under this user.");
     } else {
         models.List.create({
