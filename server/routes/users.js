@@ -7,7 +7,11 @@ var express = require('express'),
     router = express.Router(),
     passport = require('passport'),
     bcrypt = require('bcrypt-nodejs'),
-    models = require('../models/index');
+    models = require('../models/index'),
+    env = process.env.NODE_ENV || 'development',
+    config = require(__dirname + '/../config/config.json')[env],
+    jwt = require('express-jwt'),
+    jwtSecret = process.env.JWT_SECRET || config.jwt_secret;
 
 router.route('/users')
     //.get(getUsers) TODO
@@ -15,12 +19,12 @@ router.route('/users')
 
 router.route('/users/:userId')
     .get(getUser);
-//.put(putUser) TODO
-//.delete(deleteUser); TODO
+//.put(putUser) TODO ensure that only the user with the user ID can edit.
+//.delete(deleteUser); TODO ensure that only the user with the user ID can edit.
 
 router.route('/users/:userId/lists')
     .get(getUserLists)
-    .post(postUserList);
+    .post(jwt({secret: jwtSecret}), postUserList);
 
 // Adds a user. Creates a list for the user after it's created.
 function postUser(req, res) {
@@ -65,10 +69,11 @@ function getUser(req, res) {
     models.User.findOne({
         where: {
             id: userId
-        }
+        },
+        attributes: [
+            'id', 'email', 'username', 'firstName', 'lastName', 'createdAt', 'updatedAt'
+        ]
     }).then(function (user) {
-        delete user.password; // Don't send password hash.
-        delete user.salt; // Don't send salt.
         res.status(200).json(user);
     }).catch(function (err) {
         // TODO: Handle error properly.
@@ -96,18 +101,24 @@ function getUserLists(req, res) {
 function postUserList(req, res) {
     var name = req.body.name,
         isPrivate = req.body.isPrivate,
-        ownerId = req.params.userId;
+        ownerId = req.params.userId,
+        userId = req.user.id;
 
-    models.List.create({
-        name: name,
-        isPrivate: isPrivate,
-        ownerId: ownerId
-    }).then(function (list) {
-        res.status(201).json(list);
-    }).catch(function (error) {
-        // TODO: Handle error properly.
-        res.status(500).json({error: error});
-    });
+    // Ensure that the token's user ID matches the owner ID of list to be created.
+    if (ownerId !== userId) {
+        res.status(401).json("You are not authorized to create a list under this user.");
+    } else {
+        models.List.create({
+            name: name,
+            isPrivate: isPrivate,
+            ownerId: ownerId
+        }).then(function (list) {
+            res.status(201).json(list);
+        }).catch(function (error) {
+            // TODO: Handle error properly.
+            res.status(500).json({error: error});
+        });
+    }
 }
 
 module.exports = router;

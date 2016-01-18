@@ -5,19 +5,23 @@
 
 var express = require('express'),
     router = express.Router(),
-    models = require('../models/index');
+    models = require('../models/index'),
+    env = process.env.NODE_ENV || 'development',
+    config = require(__dirname + '/../config/config.json')[env],
+    jwt = require('express-jwt'),
+    jwtSecret = process.env.JWT_SECRET || config.jwt_secret;
 
 //router.route('/lists');
 //.get(getLists) TODO
 
 router.route('/lists/:listId')
     .get(getList)
-    .put(putList)
-    .delete(deleteList);
+    .put(jwt({ secret: jwtSecret }), putList)
+    .delete(jwt({ secret: jwtSecret }), deleteList);
 
 router.route('/lists/:listId/tabs')
     .get(getListTabs)
-    .post(postListTab);
+    .post(jwt({ secret: jwtSecret }), postListTab);
 
 // Get a list.
 function getList(req, res) {
@@ -39,18 +43,32 @@ function getList(req, res) {
 function putList(req, res) {
     var name = req.body.name,
         isPrivate = req.body.isPrivate,
-        listId = req.params.listId;
+        listId = req.params.listId,
+        userId = req.user.id; // User ID from decoded JWT token.
 
-    models.List.update({
-        name: name,
-        isPrivate: isPrivate
-    }, {
+    // Ensure that the list is only modified by the owner.
+    models.List.findAll({
         where: {
             id: listId
         }
-    }).then(function () {
-        // TODO: Handle success properly.
-        res.status(204).json();
+    }).then(function (lists) {
+        if (lists.length !== 1) {
+            res.status(404).json("List not found.");
+        } else if (lists[0].ownerId !== userId) {
+            res.status(401).json("You are not authorized to modify this list.");
+        } else {
+            models.List.update({
+                name: name,
+                isPrivate: isPrivate
+            }, {
+                where: {
+                    id: listId
+                }
+            }).then(function () {
+                // TODO: Handle success properly.
+                res.status(204).json();
+            });
+        }
     }).catch(function (error) {
         // TODO: Handle error properly.
         res.status(500).json({error: error});
@@ -59,23 +77,37 @@ function putList(req, res) {
 
 // Delete list and all tabs related to it.
 function deleteList(req, res) {
-    var listId = req.params.listId;
+    var listId = req.params.listId,
+        userId = req.user.id; // Decoded user ID from JWT.
 
-    models.Tab.destroy({
+    // Ensure that the list is only modified by the owner.
+    models.List.findAll({
         where: {
-            listId: listId
+            id: listId
         }
-    }).then(function () {
-        // All tabs deleted in the list were deleted.
-        return models.List.destroy({
-            where: {
-                id: listId
-            }
-        });
-    }).then(function () {
-        // The list was deleted successfully.
-        // TODO: Handle success properly.
-        res.status(204).json();
+    }).then(function (lists) {
+        if (lists.length !== 1) {
+            res.status(404).json("List not found.");
+        } else if (lists[0].ownerId !== userId) {
+            res.status(401).json("You are not authorized to delete this list.");
+        } else {
+            models.Tab.destroy({
+                where: {
+                    listId: listId
+                }
+            }).then(function () {
+                // All tabs deleted in the list were deleted.
+                return models.List.destroy({
+                    where: {
+                        id: listId
+                    }
+                });
+            }).then(function () {
+                // The list was deleted successfully.
+                // TODO: Handle success properly.
+                res.status(204).json();
+            });
+        }
     }).catch(function (error) {
         // TODO: Handle error properly.
         res.status(500).json({error: error});

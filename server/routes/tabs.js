@@ -5,12 +5,16 @@
 
 var express = require('express'),
     router = express.Router(),
-    models = require('../models/index');
+    models = require('../models/index'),
+    env = process.env.NODE_ENV || 'development',
+    config = require(__dirname + '/../config/config.json')[env],
+    jwt = require('express-jwt'),
+    jwtSecret = process.env.JWT_SECRET || config.jwt_secret;
 
 router.route('/tabs/:tabId')
     .get(getTab)
-    .put(putTab)
-    .delete(deleteTab);
+    .put(jwt({ secret: jwtSecret }), putTab) // TODO: Ensure that only the tab poster can edit this tab.
+    .delete(jwt({ secret: jwtSecret }), deleteTab); // TODO: Ensure that only the tab poster can delete this tab.
 
 // Get a tab.
 function getTab(req, res) {
