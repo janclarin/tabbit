@@ -8,9 +8,9 @@
         .module('app')
         .controller('ListController', ListController);
 
-    ListController.$inject = ['$state', '$stateParams', '$uibModal', 'listService'];
+    ListController.$inject = ['$state', '$stateParams', '$uibModal', 'listService', 'authService'];
 
-    function ListController($state, $stateParams, $uibModal, listService) {
+    function ListController($state, $stateParams, $uibModal, listService, authService) {
         var vm = this;
 
         vm.createListModalInstance = createListModalInstance;
@@ -21,6 +21,7 @@
         vm.editList = editList;
         vm.deleteList = deleteList;
         vm.viewList = viewList;
+        vm.isAuthorizedToModify = isAuthorizedToModify;
         vm.userId = $stateParams.userId; // Get user's ID from state params.
         vm.selectedListId = null;
         vm.lists = []; // User's lists.
@@ -42,6 +43,15 @@
                         // TODO: Handle no lists.
                     }
                 });
+        }
+
+        /**
+         * Indicates whether or not the list can be edited by the logged in user.
+         * @param list list to modify.
+         * @returns {*|boolean} Indicates if the user is authorized to modify the list.
+         */
+        function isAuthorizedToModify(list) {
+            return authService.isAuthorized(list.ownerId);
         }
 
         /**

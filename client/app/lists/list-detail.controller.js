@@ -9,10 +9,10 @@
         .controller('ListDetailController', ListDetailController);
 
     ListDetailController.$inject = ['$state', '$stateParams', '$uibModal', 'listService', 'tabService',
-        'tabProgressService', 'tabTypeService', 'userService'];
+        'tabProgressService', 'tabTypeService', 'userService', 'authService'];
 
     function ListDetailController($state, $stateParams, $uibModal, listService, tabService, tabProgressService,
-                                  tabTypeService, userService) {
+                                  tabTypeService, userService, authService) {
         var vm = this;
 
         vm.viewTabSource = viewTabSource;
@@ -23,6 +23,7 @@
         vm.saveTab = saveTab;
         vm.editTab = editTab;
         vm.deleteTab = deleteTab;
+        vm.isAuthorizedToModify = isAuthorizedToModify;
         vm.list = null;
         vm.listId = $stateParams.listId; // Get list object from state params.
         vm.listOwner = null;
@@ -60,6 +61,14 @@
                 .then(function (tabTypes) {
                     vm.tabTypes = tabTypes;
                 });
+        }
+
+        /**
+         * Indicates whether or not the user can edit a list and its tabs.
+         * @returns {boolean}
+         */
+        function isAuthorizedToModify() {
+            return vm.listOwner && authService.isAuthorized(vm.listOwner.id);
         }
 
         /**

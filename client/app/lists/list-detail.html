@@ -7,7 +7,7 @@
       <p>{{ vm.listOwner.username }} - {{ vm.tabs.length }} song{{ vm.tabs.length !== 1 ? 's' : ''; }}</p>
     </div>
     <div class="col-xs-5 col-sm-7">
-      <div class="pull-right">
+      <div class="pull-right" ng-if="vm.isAuthorizedToModify()">
         <button type="button" class="btn btn-primary btn-add-song" ng-click="vm.createTabModal()">Add Song</button>
       </div>
     </div>
@@ -43,7 +43,7 @@
                 <a href="" data-toggle="dropdown">
                   <i class="fa fa-ellipsis-h"></i>
                 </a>
-                <ul class="dropdown-menu dropdown-menu-right">
+                <ul class="dropdown-menu dropdown-menu-right" ng-if="vm.isAuthorizedToModify()">
                   <li ng-click="vm.editTabModal(tab)"><a>Edit</a></li>
                   <li ng-click="vm.deleteTabModal(tab)"><a>Delete</a></li>
                 </ul>

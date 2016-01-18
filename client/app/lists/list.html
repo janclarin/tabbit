@@ -17,7 +17,7 @@
              ng-class="{ 'list-group-item-info': vm.selectedListId === list.id }"
              ng-click="vm.viewList(list.id)">
           {{ list.name }}
-          <span class="pull-right">
+          <span class="pull-right" ng-if="vm.isAuthorizedToModify(list)">
             <a href="" ng-click="vm.editListModal(list); $event.stopPropagation();">
               <i class="fa fa-pencil"></i>
             </a>

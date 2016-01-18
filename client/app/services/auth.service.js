@@ -15,6 +15,7 @@
 
         return {
             isLoggedIn: isLoggedIn,
+            isAuthorized: isAuthorized,
             getLoggedInUser: getLoggedInUser,
             getLoggedInUserToken: getLoggedInUserToken,
             setLoggedInUserToken: setLoggedInUserToken,
@@ -47,6 +48,16 @@
                 loggedInUser = jwtHelper.decodeToken(token);
             }
             return loggedInUser;
+        }
+
+        /**
+         * Indicates if the logged in user's ID matches the specified user ID.
+         * @param userId
+         * @returns {boolean}
+         */
+        function isAuthorized(userId) {
+            var user = getLoggedInUser();
+            return user && user.id == userId;
         }
 
         function isLoggedIn() {
