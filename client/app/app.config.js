@@ -9,17 +9,18 @@
         .config(config)
         .run(run);
 
-    function config($locationProvider, $stateProvider, $urlRouterProvider) {
-        // Use HTML5 History API.
-        //$locationProvider.html5Mode(true);
-
-        // Default to index.
-        $urlRouterProvider.otherwise('/');
-
+    function config($stateProvider, $urlRouterProvider, $httpProvider) {
         // Set states.
         $stateProvider
             .state('home', {
                 url: '/',
+                templateUrl: 'app/users/login.html',
+                controller: 'LoginController',
+                controllerAs: 'vm',
+                access: { restricted: false }
+            })
+            .state('login', {
+                url: '/login',
                 templateUrl: 'app/users/login.html',
                 controller: 'LoginController',
                 controllerAs: 'vm',
@@ -39,7 +40,21 @@
                 controllerAs: 'vm',
                 access: { restricted: false }
             })
-           .state('lists', {
+           .state('my-lists', {
+                url: 'lists',
+                templateUrl: 'app/lists/list.html',
+                controller: 'ListController',
+                controllerAs: 'vm',
+                access: { restricted: true }
+            })
+            .state('my-lists.detail', {
+                url: '/:listId',
+                templateUrl: 'app/lists/list-detail.html',
+                controller: 'ListDetailController',
+                controllerAs: 'vm',
+                access: { restricted: true }
+            })
+            .state('lists', {
                 url: '/users/:userId/lists',
                 templateUrl: 'app/lists/list.html',
                 controller: 'ListController',
@@ -47,7 +62,7 @@
                 access: { restricted: false }
             })
             .state('lists.detail', {
-                url: '/:listId/tabs',
+                url: '/:listId',
                 templateUrl: 'app/lists/list-detail.html',
                 controller: 'ListDetailController',
                 controllerAs: 'vm',
@@ -60,6 +75,12 @@
                 controllerAs: 'vm',
                 access: { restricted: false }
             });
+
+        // Default to index.
+        $urlRouterProvider.otherwise('/');
+
+        // Add the JWT auth interceptor.
+        $httpProvider.interceptors.push('authInterceptor');
     }
 
     function run($rootScope, $location, $state, authService) {
