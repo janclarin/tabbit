@@ -32,11 +32,15 @@
             listService.query(vm.userId)
                 .then(function(lists) {
                     vm.lists = lists;
-                    if (!vm.selectedListId) {
-                        var list = vm.lists[0];
-                        vm.selectedListId = list.id; // Set selected list by default.
+                    if (vm.lists.length > 0) {
+                        if (!vm.selectedListId) {
+                            var list = vm.lists[0];
+                            vm.selectedListId = list.id; // Set selected list by default.
+                        }
+                        $state.go('lists.detail', { listId: list.id });
+                    } else {
+                        // TODO: Handle no lists.
                     }
-                    $state.go('lists.detail', { listId: list.id });
                 });
         }
 
