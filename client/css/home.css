@@ -1,3 +1,8 @@
+.btn-try {
+  max-width: 350px;
+  margin: 5px auto 0 auto;
+}
+
 .info-icon {
   margin-bottom: 10px;
 }
