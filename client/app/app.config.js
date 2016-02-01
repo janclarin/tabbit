@@ -13,7 +13,7 @@
         // Set states.
         $stateProvider
             .state('home', {
-                url: '/home',
+                url: '/',
                 abstract: true, // Active with register child.
                 templateUrl: 'app/home/home.html',
                 controller: 'HomeController',
@@ -96,7 +96,7 @@
     function run($rootScope, $location, $state, authService) {
         $rootScope.$on('$stateChangeStart', function(event, next, current) {
             if (next.access.restricted && !authService.isLoggedIn()) {
-                $location.path('/home');
+                $location.path('/');
             }
         });
     }
