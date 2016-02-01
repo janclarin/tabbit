@@ -1,4 +1,4 @@
-<div class="panel panel-default form-login">
+<div class="form-login">
   <h1>Tabbit</h1>
   <div ng-show="vm.error" class="alert alert-danger">{{vm.errorMessage}}</div>
   <form class="form" ng-submit="vm.logIn()">
@@ -11,10 +11,10 @@
       <input type="password" class="form-control" id="input-password" name="password" ng-model="vm.loginForm.password" required>
     </div>
     <div>
-      <button type="submit" class="btn btn-lg btn-primary btn-block" ng-disabled="vm.disabled">Log in</button>
+      <button type="submit" class="btn btn-primary btn-block" ng-disabled="vm.disabled">Log in</button>
     </div>
   </form>
 
-  <a type="button" class="btn btn-register btn-lg btn-link btn-block" href="/#/register">Register</a>
+  <a type="button" class="btn btn-register btn-link btn-block" ui-sref="home.register">Register</a>
 
 </div>

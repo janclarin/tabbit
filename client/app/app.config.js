@@ -13,9 +13,17 @@
         // Set states.
         $stateProvider
             .state('home', {
-                url: '/',
-                templateUrl: 'app/users/login.html',
-                controller: 'LoginController',
+                url: '/home',
+                abstract: true, // Active with register child.
+                templateUrl: 'app/home/home.html',
+                controller: 'HomeController',
+                controllerAs: 'vm',
+                access: { restricted: false }
+            })
+            .state('home.register', {
+                url: '', // Active when parent is active.
+                templateUrl: 'app/users/register.html',
+                controller: 'RegisterController',
                 controllerAs: 'vm',
                 access: { restricted: false }
             })
@@ -33,6 +41,7 @@
                 controllerAs: 'vm',
                 access: { restricted: false }
             })
+            /*
             .state('register', {
                 url: '/register',
                 templateUrl: 'app/users/register.html',
@@ -40,6 +49,7 @@
                 controllerAs: 'vm',
                 access: { restricted: false }
             })
+            */
            .state('my-lists', {
                 url: 'lists',
                 templateUrl: 'app/lists/list.html',
@@ -86,7 +96,7 @@
     function run($rootScope, $location, $state, authService) {
         $rootScope.$on('$stateChangeStart', function(event, next, current) {
             if (next.access.restricted && !authService.isLoggedIn()) {
-                $location.path('/login');
+                $location.path('/home');
             }
         });
     }
