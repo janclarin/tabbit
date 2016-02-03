@@ -1,3 +1,6 @@
+# Heroku environment file
+.env
+
 # Settings folders
 .idea/
 
