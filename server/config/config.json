@@ -3,7 +3,6 @@
     "dialect": "sqlite",
     "storage": "./db.development.sqlite",
     "jwt_secret": "tabbit"
-
   },
   "staging": {
     "use_env_variable": "DATABASE_URL",
