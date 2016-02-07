@@ -48,7 +48,7 @@
         /**
          * Indicates whether or not the list can be edited by the logged in user.
          * @param list list to modify.
-         * @returns {*|boolean} Indicates if the user is authorized to modify the list.
+         * @returns {boolean} Indicates if the user is authorized to modify the list.
          */
         function isAuthorizedToModify(list) {
             return authService.isAuthorized(list.ownerId);

@@ -60,6 +60,10 @@
             return user && user.id == userId;
         }
 
+        /**
+         * Indicates that there is a valid token in local cache and the user info is in the encoded token.
+         * @returns {boolean}
+         */
         function isLoggedIn() {
             return hasValidToken() && getLoggedInUser();
         }
