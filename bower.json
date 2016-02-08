@@ -3,7 +3,7 @@
   "description": "Tab web app",
   "main": "",
   "authors": [
-    "Jan Clarin <jan@clarin.me>"
+    "Jan Clarin <hi@janclarin.com>"
   ],
   "license": "MIT",
   "homepage": "https://github.com/janclarin/tab-app",
@@ -18,7 +18,7 @@
   ],
   "dependencies": {
     "bootstrap": "~3.3.6",
-    "angular": "~1.4.8",
+    "angular": "~1.5.0",
     "angular-bootstrap": "~0.14.3",
     "angular-ui-router": "~0.2.15",
     "angular-filter": "~0.5.8",
