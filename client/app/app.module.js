@@ -8,6 +8,7 @@
         .module('app', [
             'angular.filter',
             'angular-jwt',
+            'ngFileUpload',
             'ui.bootstrap',
             'ui.router'
         ]);
