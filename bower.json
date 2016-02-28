@@ -23,6 +23,7 @@
     "angular-ui-router": "~0.2.15",
     "angular-filter": "~0.5.8",
     "angular-jwt": "~0.0.9",
-    "ng-file-upload": "^11.2.3"
+    "ng-file-upload": "^11.2.3",
+    "font-awesome": "^4.5.0"
   }
 }
