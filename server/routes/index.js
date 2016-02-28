@@ -7,7 +7,11 @@ var express = require('express'),
     env = process.env.NODE_ENV || 'development',
     config = require(__dirname + '/../config/config.json')[env],
     jwt = require('jsonwebtoken'),
-    jwtSecret = process.env.JWT_SECRET || config.jwt_secret;
+    aws = require('aws-sdk'),
+    jwtSecret = process.env.JWT_SECRET || config.jwt_secret,
+    awsAccessKey = process.env.AWS_ACCESS_KEY,
+    awsSecretKey = process.env.AWS_SECRET_KEY,
+    awsBucket = process.env.AWS_S3_BUCKET;
 
 router.get('/', function(req, res) {
     res.sendFile(path.join(__dirname, '../client', 'index.html'));
@@ -55,6 +59,25 @@ router.post('/login', passport.authenticate('local'), function(req, res) {
 router.get('/logout', function(req, res) {
     req.logout();
     res.status(200).json({status: 'Logout successful.'}) ;
+});
+
+router.get('/signedUrlS3', function(req, res) {
+    // Used for creating a pre-signed URL for uploading files to AWS S3 on the client app.
+    aws.config.update({ accessKeyId: awsAccessKey, secretAccessKey: awsSecretKey });
+    var s3 = new aws.S3();
+    var params = {
+        Bucket: awsBucket,
+        Key: req.query.fileName,
+        Expires: 60, // seconds
+        ContentType: req.query.fileType,
+        ACL: 'public-read'
+    };
+    s3.getSignedUrl('putObject', params, function (err, url) {
+        if (err) {
+            console.log(err);
+        }
+        res.json({ url: url });
+    });
 });
 
 module.exports = router;
