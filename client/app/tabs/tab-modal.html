@@ -1,39 +1,61 @@
+<!-- Add/edit tab modal -->
 <form class="form" ng-submit="vm.confirm()">
   <div class="modal-header">
     <h4 class="modal-title">{{ ::vm.modalContents.title }}</h4>
   </div>
   <div class="modal-body">
+    <!-- Song -->
     <div class="form-group">
       <label for="input-song">Song</label>
       <input type="text" class="form-control" id="input-song" name="song" placeholder="e.g. Blackbird"
              ng-model="vm.tab.songName" required autofocus>
     </div>
+
+    <!-- Artist -->
     <div class="form-group">
       <label for="input-artist">Artist</label>
       <input type="text" class="form-control" id="input-artist" name="artist" placeholder="e.g. The Beatles"
              ng-model="vm.tab.artistName">
     </div>
+
+    <!-- Source file/link -->
     <div class="form-group">
       <label for="input-source">Source link/attachment</label>
-      <input type="text" class="form-control" id="input-source" name="source" placeholder="e.g. https://tabs.ultimate-guitar.com/t/the_beatles/blackbird_ver5_tab.htm"
-             ng-model="vm.tab.source">
+      <div class="input-group">
+        <span class="input-group-btn">
+          <!-- Upload file button -->
+          <button class="btn btn-default" type="button" ngf-select="vm.upload($file)">
+            <i class="fa fa-lg fa-paperclip"></i>
+          </button>
+        </span>
+        <input type="text" class="form-control" id="input-source" name="source" placeholder="e.g. https://tabs.ultimate-guitar.com/t/the_beatles/blackbird_ver5_tab.htm"
+               ng-model="vm.tab.source">
+      </div>
     </div>
-    <div class="form-group">
-      <label for="input-type">Type</label>
-      <select class="form-control" id="input-type" name="type" required
-              ng-model="vm.selectedType"
-              ng-options="type as type.name for type in vm.tabTypes track by type.id">
-      </select>
-    </div>
-    <div class="form-group">
-      <label for="input-progress">Progress</label>
-      <select class="form-control" id="input-progress" name="progress" required
-              ng-model="vm.selectedProgress"
-              ng-options="progress as progress.name for progress in vm.tabProgresses track by progress.id">
-      </select>
+
+    <div class="row">
+      <!-- Progress -->
+      <div class="form-group col-xs-7">
+        <label for="input-progress">Progress</label>
+        <select class="form-control" id="input-progress" name="progress" required
+                ng-model="vm.selectedProgress"
+                ng-options="progress as progress.name for progress in vm.tabProgresses track by progress.id">
+        </select>
+      </div>
+
+      <!-- Type -->
+      <div class="form-group col-xs-5">
+        <label for="input-type">Type</label>
+        <select class="form-control" id="input-type" name="type" required
+                ng-model="vm.selectedType"
+                ng-options="type as type.name for type in vm.tabTypes track by type.id">
+        </select>
+      </div>
     </div>
   </div>
+
   <div class="modal-footer">
+    <!-- TODO: Progress bar for uploading source file -->
     <button type="button" class="btn btn-default" ng-click="vm.cancel()">Cancel</button>
     <button type="submit" class="btn btn-primary">{{ ::vm.modalContents.confirmText }}</button>
   </div>

@@ -11,7 +11,6 @@
     authInterceptor.$inject = ['$q', '$location', '$injector'];
 
     function authInterceptor($q, $location, $injector) {
-
         var authService = $injector.get('authService');
 
         return {
@@ -23,7 +22,7 @@
 
         function request(config) {
             config.headers = config.headers || {};
-            if (authService.hasValidToken()) {
+            if (needsAuthorization(config.url) && authService.hasValidToken()) {
                 var token = authService.getLoggedInUserToken();
                 config.headers.Authorization = 'Bearer ' + token;
             }
@@ -47,6 +46,16 @@
                 $location.path('/login'); // redirect to login page.
             }
             return $q.reject(rejection);
+        }
+
+        /**
+         * Used to determine if a request needs the authorization header.
+         * @param url
+         * @returns {boolean}
+         */
+        function needsAuthorization(url) {
+            var awsUrl = 's3.amazonaws.com'; // Adding auth creates error AWS requests.
+            return url.indexOf(awsUrl) === -1;
         }
     }
 })();
