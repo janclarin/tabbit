@@ -15,7 +15,6 @@
                                   tabTypeService, userService, authService) {
         var vm = this;
 
-        vm.viewTabSource = viewTabSource;
         vm.createTabModalInstance = createTabModalInstance;
         vm.createTabModal = createTabModal;
         vm.editTabModal = editTabModal;
@@ -69,17 +68,6 @@
          */
         function isAuthorizedToModify() {
             return vm.listOwner && authService.isAuthorized(vm.listOwner.id);
-        }
-
-        /**
-         * Opens the source in a new page if the tab has one.
-         * @param tab The tab to view the source of.
-         */
-        function viewTabSource(tab) {
-            if (tab.source) {
-                // Pass the list ID to know which list to return to.
-                $state.go('tabs-source', { listId: vm.listId, tabId: tab.id });
-            }
         }
 
         /**
