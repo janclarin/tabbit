@@ -67,8 +67,9 @@
 
         /**
          * Returns a file with the new name.
-         * @param file
-         * @param newName
+         * @param file The file to rename.
+         * @param newName The new name to rename the file.
+         * @return {file} File with the new name.
          */
         function renameFile(file, newName) {
             return Upload.rename(file, newName);
