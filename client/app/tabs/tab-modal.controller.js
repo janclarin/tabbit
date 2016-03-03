@@ -29,14 +29,12 @@
          * @param file The file to be uploaded.
          */
         function upload(file) {
-            awsService.getSignedUrl(file)
-                .then(function (response) {
-                    var signedUrl = response.url;
-                    return awsService.upload(file, signedUrl);
-                })
-                .then(function (response) {
-                    vm.tab.source = response.config.url.split('?')[0];
-                })
+            if (file) {
+                awsService.upload(file)
+                    .then(function (response) {
+                        vm.tab.source = response.config.url.split('?')[0]; // Remove query params.
+                    });
+            }
         }
 
         function confirm() {

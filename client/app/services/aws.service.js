@@ -12,17 +12,31 @@
 
     function awsService($http, Upload) {
         return {
-            upload: upload,
-            getSignedUrl: getSignedUrl
+            upload: upload
         };
 
         /**
          * Uploads a file using an AWS S3 signed URL from the server.
+         * The file will have a new name with a random string appended to its name.
+         * @param file The file to upload.
+         * @returns {*}
+         */
+        function upload(file) {
+            var newFileName = createUniqueFileName(file.name);
+            file = renameFile(file, newFileName);
+            return getSignedUrl(file)
+                .then(function (signedUrl) {
+                    return putFile(file, signedUrl);
+                });
+        }
+
+        /**
+         * Puts the file into AWS at the specified signed URL.
          * @param file
          * @param signedUrl
          * @returns {*}
          */
-        function upload(file, signedUrl) {
+        function putFile(file, signedUrl) {
             return Upload.http({
                 method: 'PUT',
                 url: signedUrl,
@@ -36,19 +50,45 @@
         /**
          * Gets an AWS S3 signed URL for the specified file.
          * @param file The file to upload.
-         * @returns {*}
+         * @returns string Signed URL.
          */
         function getSignedUrl(file) {
             return $http.get(
                 '/signedUrlS3', {
                     params: {
-                        fileName: file.name,
+                        fileName: file.ngfName || file.name,
                         fileType: file.type
                     }
                 }
             ).then(function (response) {
-                return response.data;
+                return response.data.url;
             });
+        }
+
+        /**
+         * Returns a file with the new name.
+         * @param file
+         * @param newName
+         */
+        function renameFile(file, newName) {
+            return Upload.rename(file, newName);
+        }
+
+        /**
+         * Creates a "unique" enough file name to store the file as.
+         * e.g. filename.pdf -> filename-[random string].pdf
+         * @param fileName The file name.
+         * @return string|null A "unique" enough file name based on the original. Null otherwise.
+         */
+        function createUniqueFileName(fileName) {
+            if (fileName !== null) {
+                var randomString = Math.random().toString(36).slice(2);
+                var lastPeriodIndex = fileName.lastIndexOf('.');
+                var name = fileName.substr(0, lastPeriodIndex);
+                var extension = fileName.substr(lastPeriodIndex);
+                return name + '-' + randomString + extension;
+            }
+            return null;
         }
     }
 })();
