@@ -23,7 +23,7 @@
          */
         function upload(file) {
             var newFileName = createUniqueFileName(file.name);
-            file = renameFile(file, newFileName);
+            file = Upload.rename(file, newFileName);
             return getSignedUrl(file)
                 .then(function (signedUrl) {
                     return putFile(file, signedUrl);
@@ -63,16 +63,6 @@
             ).then(function (response) {
                 return response.data.url;
             });
-        }
-
-        /**
-         * Returns a file with the new name.
-         * @param file The file to rename.
-         * @param newName The new name to rename the file.
-         * @return {file} File with the new name.
-         */
-        function renameFile(file, newName) {
-            return Upload.rename(file, newName);
         }
 
         /**
