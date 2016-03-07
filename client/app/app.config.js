@@ -41,29 +41,6 @@
                 controllerAs: 'vm',
                 access: { restricted: false }
             })
-            /*
-            .state('register', {
-                url: '/register',
-                templateUrl: 'app/users/register.html',
-                controller: 'RegisterController',
-                controllerAs: 'vm',
-                access: { restricted: false }
-            })
-            */
-           .state('my-lists', {
-                url: 'lists',
-                templateUrl: 'app/lists/list.html',
-                controller: 'ListController',
-                controllerAs: 'vm',
-                access: { restricted: true }
-            })
-            .state('my-lists.detail', {
-                url: '/:listId',
-                templateUrl: 'app/lists/list-detail.html',
-                controller: 'ListDetailController',
-                controllerAs: 'vm',
-                access: { restricted: true }
-            })
             .state('lists', {
                 url: '/users/:userId/lists',
                 templateUrl: 'app/lists/list.html',

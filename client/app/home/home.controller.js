@@ -16,7 +16,11 @@
         activate();
 
         function activate() {
-
+            if (authService.isLoggedIn()) {
+                // Go to the list page if already tlogged in.
+                var loggedInUserId = authService.getLoggedInUser().id;
+                $state.go('lists', { userId: loggedInUserId });
+            }
         }
     }
 })();
