@@ -60,10 +60,7 @@
   </div>
 
   <div class="modal-footer">
-    <!-- TODO: Progress bar for uploading source file -->
+    <button type="submit" class="btn btn-primary" ng-disabled="vm.isConfirmDisabled()">{{ ::vm.modalContents.confirmText }}</button>
     <button type="button" class="btn btn-default" ng-click="vm.cancel()">Cancel</button>
-    <button type="submit" class="btn btn-primary" ng-disabled="vm.isConfirmDisabled()">
-      {{ ::vm.modalContents.confirmText }}
-    </button>
   </div>
 </form>

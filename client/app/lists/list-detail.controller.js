@@ -106,7 +106,7 @@
         function createTabModal() {
             var modalContents = {
                 title: 'Add song',
-                confirmText: 'Confirm'
+                confirmText: 'Save'
             };
             var modalInstance = createTabModalInstance(
                 true,

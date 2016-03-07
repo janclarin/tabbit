@@ -88,12 +88,13 @@
         }
 
         /**
+         * TODO: Combine this method with edit.
          * Displays a modal for creating a new list.
          */
         function createListModal() {
             var modalContents = {
                 title: 'Add list',
-                confirmText: 'Confirm'
+                confirmText: 'Save'
             };
             var modalInstance = createListModalInstance(true, modalContents, {});
 
@@ -128,7 +129,6 @@
                 .catch(function (err) {
                     // TODO: Display error.
                 });
-
         }
 
         /**
