@@ -17,7 +17,7 @@
 
         function activate() {
             if (authService.isLoggedIn()) {
-                // Go to the list page if already tlogged in.
+                // Go to the list page if already logged in.
                 var loggedInUserId = authService.getLoggedInUser().id;
                 $state.go('lists', { userId: loggedInUserId });
             }

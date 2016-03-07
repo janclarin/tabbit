@@ -1,0 +1,16 @@
+<!-- User profile directive template -->
+
+<!-- Login button -->
+<li ng-if="!vm.isLoggedIn()">
+  <a href="" ng-click="vm.logIn()">Log in</a>
+</li>
+
+<!-- User dropdown -->
+<li ng-if="vm.isLoggedIn()" class="dropdown">
+  <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+    {{ vm.getLoggedInUsername() }}<span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu">
+    <li><a href="" ng-click="vm.logOut()">Log out</a></li>
+  </ul>
+</li>

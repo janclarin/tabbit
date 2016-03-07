@@ -11,7 +11,7 @@
     authService.$inject = ['$q', '$window', '$injector', 'jwtHelper'];
 
     function authService($q, $window, $injector, jwtHelper) {
-        var loggedInUser;
+        var loggedInUser = null;
 
         return {
             isLoggedIn: isLoggedIn,

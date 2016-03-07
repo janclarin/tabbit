@@ -30,10 +30,11 @@
         <a class="navbar-brand" ui-sref="home.register">Tabbit <small>[alpha]</small></a>
       </div><!-- /.navbar-header -->
 
-    <div class="collapse navbar-collapse" id="navbar-collapse">
-      <ul user-profile class="nav navbar-nav navbar-right">
-      </ul>
+      <div class="collapse navbar-collapse" id="navbar-collapse">
+        <!-- User account dropdown -->
+        <ul user-account class="nav navbar-nav navbar-right"></ul>
       </div><!-- /.navbar-collapse -->
+
     </div><!-- /.container -->
   </nav>
 
@@ -71,7 +72,7 @@
   <script src="app/app.config.js"></script>
 
   <!-- Directives -->
-  <script src="app/components/user-profile.directive.js"></script>
+  <script src="app/components/user-account.directive.js"></script>
 
   <!-- Controllers -->
   <script src="app/components/confirmation-modal.controller.js"></script>
