@@ -3,20 +3,17 @@
   <div class="modal-header">
     <h4 class="modal-title">{{ ::vm.modalContents.title }}</h4>
   </div>
-  <div class="modal-body">
+  <div class="modal-body drop-box" ngf-drop="vm.upload($file)" ngf-max-size="30MB">
     <!-- Song -->
     <div class="form-group">
       <label for="input-song">Song</label>
-      <input type="text" class="form-control" id="input-song" name="song"
-             placeholder="Song title"
-             ng-model="vm.tab.songName" required autofocus>
+      <input type="text" class="form-control" id="input-song" name="song" ng-model="vm.tab.songName" required autofocus>
     </div>
 
     <!-- Artist -->
     <div class="form-group">
       <label for="input-artist">Artist</label>
-      <input type="text" class="form-control" id="input-artist" name="artist" placeholder=""
-             ng-model="vm.tab.artistName">
+      <input type="text" class="form-control" id="input-artist" name="artist" ng-model="vm.tab.artistName">
     </div>
 
     <!-- Source file/link -->
@@ -25,12 +22,12 @@
       <div class="input-group">
         <span class="input-group-btn">
           <!-- Upload file button -->
-          <button class="btn btn-default" type="button" ngf-select="vm.upload($file)">
+          <button class="btn btn-default" type="button" ngf-select="vm.upload($file)" ngf-max-size="30MB">
             <i class="fa fa-lg fa-paperclip"></i>
           </button>
         </span>
         <input type="text" class="form-control" id="input-source" name="source"
-               placeholder="Upload a PDF or enter a link to the tab"
+               placeholder="Upload a PDF or enter a link (max file size: 30MB)"
                ng-model="vm.tab.source">
       </div>
       <!-- Upload progress bar -->
@@ -65,6 +62,8 @@
   <div class="modal-footer">
     <!-- TODO: Progress bar for uploading source file -->
     <button type="button" class="btn btn-default" ng-click="vm.cancel()">Cancel</button>
-    <button type="submit" class="btn btn-primary">{{ ::vm.modalContents.confirmText }}</button>
+    <button type="submit" class="btn btn-primary" ng-disabled="vm.isConfirmDisabled()">
+      {{ ::vm.modalContents.confirmText }}
+    </button>
   </div>
 </form>

@@ -14,6 +14,7 @@
         var vm = this;
 
         vm.upload = upload;
+        vm.isConfirmDisabled = isConfirmDisabled;
         vm.confirm = confirm;
         vm.cancel = cancel;
         vm.modalContents = modalContents;
@@ -32,6 +33,7 @@
          */
         function upload(file) {
             if (file) {
+                vm.uploadProgress = 0;
                 awsService.upload(file)
                     .then(function (response) {
                         vm.tab.source = response.config.url.split('?')[0]; // Remove query params.
@@ -41,6 +43,14 @@
                         vm.uploadProgress = parseInt(100.0 * progress.loaded / progress.total);
                     });
             }
+        }
+
+        /**
+         * Returns a boolean indicating whether or not the confirm button is disabled.
+         * @returns {boolean}
+         */
+        function isConfirmDisabled() {
+            return vm.uploadProgress && vm.uploadProgress < 100;
         }
 
         function confirm() {
