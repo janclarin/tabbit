@@ -7,20 +7,21 @@
     <!-- Song -->
     <div class="form-group">
       <label for="input-song">Song</label>
-      <input type="text" class="form-control" id="input-song" name="song" placeholder="e.g. Blackbird"
+      <input type="text" class="form-control" id="input-song" name="song"
+             placeholder="Song title"
              ng-model="vm.tab.songName" required autofocus>
     </div>
 
     <!-- Artist -->
     <div class="form-group">
       <label for="input-artist">Artist</label>
-      <input type="text" class="form-control" id="input-artist" name="artist" placeholder="e.g. The Beatles"
+      <input type="text" class="form-control" id="input-artist" name="artist" placeholder=""
              ng-model="vm.tab.artistName">
     </div>
 
     <!-- Source file/link -->
     <div class="form-group">
-      <label for="input-source">Source link/attachment</label>
+      <label for="input-source">Tab file or link</label>
       <div class="input-group">
         <span class="input-group-btn">
           <!-- Upload file button -->
@@ -28,8 +29,15 @@
             <i class="fa fa-lg fa-paperclip"></i>
           </button>
         </span>
-        <input type="text" class="form-control" id="input-source" name="source" placeholder="e.g. https://tabs.ultimate-guitar.com/t/the_beatles/blackbird_ver5_tab.htm"
+        <input type="text" class="form-control" id="input-source" name="source"
+               placeholder="Upload a PDF or enter a link to the tab"
                ng-model="vm.tab.source">
+      </div>
+      <!-- Upload progress bar -->
+      <div ng-if="vm.uploadProgress">
+        <uib-progressbar value="vm.uploadProgress" type="{{ vm.uploadStatus }}">
+          <b>{{ vm.uploadProgress }}%</b>
+        </uib-progressbar>
       </div>
     </div>
 
