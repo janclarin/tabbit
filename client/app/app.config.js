@@ -6,10 +6,10 @@
 
     angular
         .module('app')
-        .config(config)
+        .config(configure)
         .run(run);
 
-    function config($stateProvider, $urlRouterProvider, $httpProvider) {
+    function configure($stateProvider, $urlRouterProvider, $httpProvider) {
         // Set states.
         $stateProvider
             .state('home', {
