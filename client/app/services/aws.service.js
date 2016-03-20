@@ -57,7 +57,7 @@
                 '/signedUrlS3', {
                     params: {
                         fileName: file.ngfName || file.name,
-                        fileType: file.type
+                        fileType: file.type || 'application/octet-stream'
                     }
                 }
             ).then(function (response) {
