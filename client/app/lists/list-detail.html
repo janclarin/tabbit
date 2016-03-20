@@ -32,7 +32,7 @@
           <tr ng-repeat="tab in tabs | orderBy: 'songName' track by tab.id">
             <td>
               <!-- Only display play icon if the tab has a source -->
-              <a ng-href="{{ tab.source }}"><i class="fa fa-external-link" ng-if="!!tab.source"></i></a>
+              <a href="" ng-click="vm.openTabSource(tab.source)"><i class="fa fa-external-link" ng-if="!!tab.source"></i></a>
             </td>
             <td>{{ tab.songName }}</td>
             <td>{{ tab.artistName }}</td>

@@ -8,10 +8,10 @@
         .module('app')
         .controller('ListDetailController', ListDetailController);
 
-    ListDetailController.$inject = ['$state', '$stateParams', '$uibModal', 'listService', 'tabService',
+    ListDetailController.$inject = ['$state', '$stateParams', '$uibModal', '$window', 'listService', 'tabService',
         'tabProgressService', 'tabTypeService', 'userService', 'authService'];
 
-    function ListDetailController($state, $stateParams, $uibModal, listService, tabService, tabProgressService,
+    function ListDetailController($state, $stateParams, $uibModal, $window, listService, tabService, tabProgressService,
                                   tabTypeService, userService, authService) {
         var vm = this;
 
@@ -19,6 +19,7 @@
         vm.createTabModal = createTabModal;
         vm.editTabModal = editTabModal;
         vm.deleteTabModal = deleteTabModal;
+        vm.openTabSource = openTabSource;
         vm.saveTab = saveTab;
         vm.editTab = editTab;
         vm.deleteTab = deleteTab;
@@ -177,6 +178,14 @@
                 .catch(function (err) {
                     // TODO: Handle error when deleting a tab.
                 });
+        }
+
+        /**
+         * Opens the link in a new tab.
+         * @param source Link to open.
+         */
+        function openTabSource(source) {
+            $window.open(source);
         }
 
         /**
