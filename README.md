@@ -15,7 +15,7 @@ Website for organizing tabs from the web in a list and sharing your list with ot
   - Runs the app/server at http://localhost:5000
   - Runs a local instance of the app as if it were hosted on heroku ([more info](https://devcenter.heroku.com/articles/heroku-local))
 3. Run all database seeders, run `sequelize db:seed:all`
-  - Runs all database seeds located in the [server/seeders](../tree/master/server/seeders) folder
+  - Runs all database seeds located in the [server/seeders](../../tree/master/server/seeders) folder
   - This only needs to be run once per database instance unless new seeds are added
 
 #### Testing file uploads
