@@ -2,7 +2,6 @@ var express = require('express'),
     logger = require('morgan'),
     cookieParser = require('cookie-parser'),
     bodyParser = require('body-parser'),
-    expressSession = require('express-session'),
     path = require('path');
 
 var setupPassport = require('./setup-passport');
@@ -25,11 +24,6 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
-app.use(expressSession({
-    secret: 'keyboard cat', // TODO: Use proper secret.
-    resave: false,
-    saveUninitialized: false
-}));
 
 // Set up passport.
 setupPassport(app);
