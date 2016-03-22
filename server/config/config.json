@@ -4,11 +4,8 @@
     "storage": "./db.development.sqlite",
     "jwt_secret": "tabbit"
   },
-  "staging": {
-    "use_env_variable": "DATABASE_URL",
-    "jwt_secret": "ADD_JWT_SECRET_TO_ENV"
-  },
   "production": {
+    "dialect": "postgres",
     "use_env_variable": "DATABASE_URL",
     "jwt_secret": "ADD_JWT_SECRET_TO_ENV"
   }
