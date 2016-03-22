@@ -22,3 +22,14 @@ Website for organizing tabs from the web in a list and sharing your list with ot
 In order to test the upload functionality, you will need to create an Amazon AWS S3 instance.
 TODO: Add instructions for creating Amazon AWS S3 instance, privacy settings, etc.
 TODO: Add instructions for creating the `.env` heroku app settings configuration file
+
+### Heroku deployment notes
+1. Push code onto Heroku
+  - By connecting GitHub or pushing to Heroku git.
+2. Add a Heroku Postgres database add-on
+  - This sets a config variable, DATABASE_URL
+3. Set config variables
+  - AWS_ACCESS_KEY: AWS account access key
+  - AWS_SECRET_KEY: AWS account secret key
+  - AWS_S3_BUCKET: AWS S3 Bucket name
+4. Seed the database, run `heroku run sequelize db:seed:all`
