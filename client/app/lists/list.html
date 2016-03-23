@@ -7,7 +7,9 @@
       <!-- User's lists -->
       <h3>
         <small>My lists</small>
-        <a class="btn btn-sm pull-right" href="" ng-click="vm.createListModal()">
+        <a class="btn btn-sm pull-right" href=""
+           ng-if="vm.isAuthorizedToModify(vm.userId)"
+           ng-click="vm.createListModal()">
           <i class="fa fa-plus"></i>
         </a>
       </h3>
@@ -17,7 +19,7 @@
              ng-class="{ 'list-group-item-info': vm.selectedListId === list.id }"
              ng-click="vm.viewList(list.id)">
           {{ list.name }}
-          <span class="pull-right" ng-if="vm.isAuthorizedToModify(list)">
+          <span class="pull-right" ng-if="vm.isAuthorizedToModify(list.ownerId)">
             <a href="" ng-click="vm.editListModal(list); $event.stopPropagation();">
               <i class="fa fa-pencil"></i>
             </a>

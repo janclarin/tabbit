@@ -46,12 +46,12 @@
         }
 
         /**
-         * Indicates whether or not the list can be edited by the logged in user.
-         * @param list list to modify.
-         * @returns {boolean} Indicates if the user is authorized to modify the list.
+         * Indicates whether or not the list or list of lists can be edited by the logged in user.
+         * @param ownerId The ID of the owner of the list or list of lists.
+         * @returns {boolean} Indicates if the user is authorized to modify the list or list of lists.
          */
-        function isAuthorizedToModify(list) {
-            return authService.isAuthorized(list.ownerId);
+        function isAuthorizedToModify(ownerId) {
+            return authService.isAuthorized(ownerId);
         }
 
         /**
