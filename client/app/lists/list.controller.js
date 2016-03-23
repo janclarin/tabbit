@@ -22,6 +22,7 @@
         vm.deleteList = deleteList;
         vm.viewList = viewList;
         vm.isAuthorizedToModify = isAuthorizedToModify;
+        vm.isSelectedList = isSelectedList;
         vm.userId = $stateParams.userId; // Get user's ID from state params.
         vm.selectedListId = null;
         vm.lists = []; // User's lists.
@@ -52,6 +53,15 @@
          */
         function isAuthorizedToModify(ownerId) {
             return authService.isAuthorized(ownerId);
+        }
+
+        /**
+         * Indicates whether or not a list is selected by its ID.
+         * @param listId The ID of the list to check.
+         * @returns {boolean} Indicates if the list is the selected one.
+         */
+        function isSelectedList(listId) {
+            return vm.selectedListId === listId;
         }
 
         /**

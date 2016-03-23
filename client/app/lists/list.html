@@ -6,7 +6,7 @@
     <div class="col-xs-12 col-sm-4 col-md-3">
       <!-- User's lists -->
       <h3>
-        <small>My lists</small>
+        <small>Lists</small>
         <a class="btn btn-sm pull-right" href=""
            ng-if="vm.isAuthorizedToModify(vm.userId)"
            ng-click="vm.createListModal()">
@@ -16,16 +16,16 @@
 
       <div class="list-group">
         <div class="list-group-item" ng-repeat="list in vm.lists track by list.id"
-             ng-class="{ 'list-group-item-info': vm.selectedListId === list.id }"
+             ng-class="{ 'list-group-item-info': vm.isSelectedList(list.id) }"
              ng-click="vm.viewList(list.id)">
           {{ list.name }}
           <span class="pull-right" ng-if="vm.isAuthorizedToModify(list.ownerId)">
             <a href="" ng-click="vm.editListModal(list); $event.stopPropagation();">
-              <i class="fa fa-pencil"></i>
+              <i class="fa fa-pencil" ng-class="{ 'fa-inverse': vm.isSelectedList(list.id) }"></i>
             </a>
             &nbsp;
             <a href="" ng-click="vm.deleteListModal(list); $event.stopPropagation();">
-              <i class="fa fa-trash"></i>
+              <i class="fa fa-trash" ng-class="{ 'fa-inverse': vm.isSelectedList(list.id) }"></i>
             </a>
           </span>
         </div><!-- /.list-group-item -->
