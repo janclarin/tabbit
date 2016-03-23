@@ -2,11 +2,22 @@
   "development": {
     "dialect": "sqlite",
     "storage": "./db.development.sqlite",
+    "migrationStorage": "sequelize",
+    "seederStorage": "sequelize",
     "jwt_secret": "tabbit"
+  },
+  "staging": {
+    "dialect": "postgres",
+    "use_env_variable": "DATABASE_URL",
+    "migrationStorage": "sequelize",
+    "seederStorage": "sequelize",
+    "jwt_secret": "ADD_JWT_SECRET_TO_ENV"
   },
   "production": {
     "dialect": "postgres",
     "use_env_variable": "DATABASE_URL",
+    "migrationStorage": "sequelize",
+    "seederStorage": "sequelize",
     "jwt_secret": "ADD_JWT_SECRET_TO_ENV"
   }
 }
