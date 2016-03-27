@@ -6,7 +6,7 @@
 var express = require('express'),
     router = express.Router(),
     passport = require('passport'),
-    bcrypt = require('bcrypt-nodejs'),
+    bcrypt = require('bcrypt'),
     models = require('../models/index'),
     env = process.env.NODE_ENV || 'development',
     config = require(__dirname + '/../config/config.json')[env],
@@ -19,8 +19,11 @@ router.route('/users')
 
 router.route('/users/:userId')
     .get(getUser);
-//.put(putUser) TODO ensure that only the user with the user ID can edit.
+    // .put(putUser); // TODO ensure that only the user with the user ID can edit.
 //.delete(deleteUser); TODO ensure that only the user with the user ID can edit.
+
+router.route('/users/:userId/password')
+    .put(jwt({secret: jwtSecret}), putUserPassword);
 
 router.route('/users/:userId/lists')
     .get(getUserLists)
@@ -66,18 +69,54 @@ function postUser(req, res) {
 function getUser(req, res) {
     var userId = req.params.userId;
 
-    models.User.findOne({
-        where: {
-            id: userId
-        },
-        attributes: [
-            'id', 'email', 'username', 'firstName', 'lastName', 'createdAt', 'updatedAt'
+    models.User.findById(userId, {
+        attributes: [ // Does not include email, name, password, or salt.
+            'id', 'username', 'createdAt', 'updatedAt'
         ]
     }).then(function (user) {
         res.status(200).json(user);
     }).catch(function (err) {
         // TODO: Handle error properly.
         res.status(500).json({err: err});
+    });
+}
+
+// Update user.
+function putUserPassword(req, res) {
+    var password = req.body.password,
+        newPassword = req.body.newPassword,
+        userId = req.params.userId, // User ID from route.
+        jwtUserId = req.user.id; // User ID from decoded JWT token.
+
+    // Ensure that the token's user ID matches the ID of the user to update.
+    if (parseInt(userId) !== jwtUserId) {
+        return res.status(401).json({ error:'You are not authorized to update this user\'s password.' });
+    }
+    
+    models.User.findById(userId, {
+        attributes: [
+            'password'
+        ]
+    }).then(function (user) {
+        // Check if the password in the request matches the one in the DB.
+        if (!bcrypt.compareSync(password, user.password)) {
+            return res.status(401).json({ error: 'Old password is not valid.' });
+        }
+        
+        // Generate hashed password
+        var newSalt = bcrypt.genSaltSync(10);
+        var newHashedPassword = bcrypt.hashSync(newPassword, newSalt);
+        models.User.update({
+            password: newHashedPassword,
+            salt: newSalt
+        }, {
+            where: { id: userId }
+        }).then(function () {
+            res.status(204).json();
+        });
+    }).catch(function (err) {
+        // TODO: Handle error properly.
+        res.status(500).json({ error: err });
     });
 }
 
@@ -91,9 +130,9 @@ function getUserLists(req, res) {
         }
     }).then(function (lists) {
         res.status(200).json(lists);
-    }).catch(function (error) {
+    }).catch(function (err) {
         // TODO: Handle error properly.
-        res.status(500).json({error: error});
+        res.status(500).json({ error: err });
     });
 }
 
@@ -106,19 +145,19 @@ function postUserList(req, res) {
 
     // Ensure that the token's user ID matches the owner ID of list to be created.
     if (parseInt(ownerId) !== jwtUserId) {
-        res.status(401).json("You are not authorized to create a list under this user.");
-    } else {
-        models.List.create({
-            name: name,
-            isPrivate: isPrivate,
-            ownerId: ownerId
-        }).then(function (list) {
-            res.status(201).json(list);
-        }).catch(function (error) {
-            // TODO: Handle error properly.
-            res.status(500).json({error: error});
-        });
+        return res.status(401).json('You are not authorized to create a list under this user.');
     }
+    
+    models.List.create({
+        name: name,
+        isPrivate: isPrivate,
+        ownerId: ownerId
+    }).then(function (list) {
+        res.status(201).json(list);
+    }).catch(function (err) {
+        // TODO: Handle error properly.
+        res.status(500).json({ error: err });
+    });
 }
 
 module.exports = router;
