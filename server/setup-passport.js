@@ -5,7 +5,7 @@
 
 var passport = require('passport'),
     LocalStrategy = require('passport-local').Strategy,
-    bcrypt = require('bcrypt-nodejs'),
+    bcrypt = require('bcrypt'),
     models = require('./models/index');
 
 module.exports = function(app) {
