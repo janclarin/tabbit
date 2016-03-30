@@ -22,7 +22,7 @@ router.route('/users/:userId')
     // .put(putUser); // TODO ensure that only the user with the user ID can edit.
 //.delete(deleteUser); TODO ensure that only the user with the user ID can edit.
 
-router.route('/users/:userId/passwordreset')
+router.route('/users/:userId/change-password')
     .put(jwt({secret: jwtSecret}), putUserPassword);
 
 router.route('/users/:userId/lists')
