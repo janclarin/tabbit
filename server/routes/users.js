@@ -22,7 +22,7 @@ router.route('/users/:userId')
     // .put(putUser); // TODO ensure that only the user with the user ID can edit.
 //.delete(deleteUser); TODO ensure that only the user with the user ID can edit.
 
-router.route('/users/:userId/password')
+router.route('/users/:userId/passwordreset')
     .put(jwt({secret: jwtSecret}), putUserPassword);
 
 router.route('/users/:userId/lists')
@@ -90,7 +90,7 @@ function putUserPassword(req, res) {
 
     // Ensure that the token's user ID matches the ID of the user to update.
     if (parseInt(userId) !== jwtUserId) {
-        return res.status(401).json({ error:'You are not authorized to update this user\'s password.' });
+        return res.status(401).json({ error: 'You are not authorized to update this user\'s password.' });
     }
     
     models.User.findById(userId, {
