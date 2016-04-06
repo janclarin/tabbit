@@ -3,8 +3,8 @@
   <!-- Page header -->
   <div class="row">
     <div class="col-xs-7 col-sm-5">
-      <h3 class="">{{ vm.list.name }}</h3>
-      <p>{{ vm.listOwner.username }} - {{ vm.tabs.length }} song{{ vm.tabs.length !== 1 ? 's' : ''; }}</p>
+      <h3 ng-bind="vm.list.name"></h3>
+      <p ng-bind="vm.getListInfo()"></p>
     </div>
     <div class="col-xs-5 col-sm-7">
       <div class="pull-right" ng-if="vm.isAuthorizedToModify()">
@@ -17,7 +17,7 @@
   <div class="row">
     <div class="col-xs-12">
       <div ng-repeat="(progressId, tabs) in vm.tabs | groupBy: 'progressId'">
-        <h4>{{ vm.tabProgresses[progressId - 1].name }}</h4>
+        <h4 ng-bind="vm.tabProgresses[progressId - 1].name"></h4>
         <table class="table table-hover">
           <thead>
           <tr>
@@ -34,9 +34,9 @@
               <!-- Only display play icon if the tab has a source -->
               <a href="" ng-click="vm.openTabSource(tab.source)"><i class="fa fa-external-link" ng-if="!!tab.source"></i></a>
             </td>
-            <td>{{ tab.songName }}</td>
-            <td>{{ tab.artistName }}</td>
-            <td>{{ vm.tabTypes[tab.typeId - 1].name }}</td>
+            <td ng-bind="tab.songName"></td>
+            <td ng-bind="tab.artistName"></td>
+            <td ng-bind="vm.tabTypes[tab.typeId - 1].name"></td>
             <td>
               <!-- Tab overflow dropdown -->
               <div class="dropdown pull-right" ng-if="vm.isAuthorizedToModify()">

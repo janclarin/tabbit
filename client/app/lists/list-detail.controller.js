@@ -23,6 +23,7 @@
         vm.saveTab = saveTab;
         vm.editTab = editTab;
         vm.deleteTab = deleteTab;
+        vm.getListInfo = getListInfo;
         vm.isAuthorizedToModify = isAuthorizedToModify;
         vm.list = null;
         vm.listId = $stateParams.listId; // Get list object from state params.
@@ -61,6 +62,14 @@
                 .then(function (tabTypes) {
                     vm.tabTypes = tabTypes;
                 });
+        }
+
+        /**
+         * Creates a string with information about the list.
+         * @returns {string}
+         */
+        function getListInfo() {
+            return vm.listOwner.username + " - " + vm.tabs.length + " song" + (vm.tabs.length !== 1 ? 's' : '');
         }
 
         /**
