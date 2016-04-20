@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "Tab web app",
   "scripts": {
+    "prestart": "sequelize db:migrate",
     "start": "node server/server.js",
     "postinstall": "bower install"
   },
