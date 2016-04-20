@@ -21,9 +21,19 @@ In order to test the upload functionality, you will need to create an Amazon AWS
 TODO: Add instructions for creating Amazon AWS S3 instance, privacy settings, etc.
 TODO: Add instructions for creating the `.env` heroku app settings configuration file
 
+### Database migrations
+#### Create migration
+1. Run `sequelize migration:create --name "migration-name"` to create a new migration
+2. Edit the "up" function in the newly created migration script in [server/migrations](../../tree/master/server/migrations) folder
+3. Edit the "down" function in the newly created migration script in [server/migrations](../../tree/master/server/migrations) folder
+
+#### Run migrations
+1. Run `sequelize db:migrate` to run all migrations that have not been run
+2. Check the database for the changes
+
 ### Heroku deployment notes
 1. Push code onto Heroku
-  - By connecting GitHub or pushing to Heroku git.
+  - By connecting GitHub or pushing to Heroku git
 2. Add a Heroku Postgres database add-on
   - This sets a config variable, DATABASE_URL
 3. Set config variables
