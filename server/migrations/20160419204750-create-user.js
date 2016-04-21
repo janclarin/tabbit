@@ -6,34 +6,35 @@ module.exports = {
             'User',
             {
                 id: {
+                    allowNull: false,
                     type: Sequelize.INTEGER,
                     primaryKey: true,
                     autoIncrement: true
                 },
                 email: {
+                    allowNull: false,
                     type: Sequelize.STRING,
                     unique: true,
-                    allowNull: false,
                     validate: {
                         isEmail: true,
                         isLowercase: true // Ensure that it's lowercase when passed in.
                     }
                 },
                 username: {
+                    allowNull: false,
                     type: Sequelize.STRING,
                     unique: true,
-                    allowNull: false,
                     validate: {
                         isLowercase: true // Ensure that it's lowercase when passed in.
                     }
                 },
                 password: {
-                    type: Sequelize.STRING,
-                    allowNull: false
+                    allowNull: false,
+                    type: Sequelize.STRING
                 },
                 salt: {
-                    type: Sequelize.STRING,
-                    allowNull: false
+                    allowNull: false,
+                    type: Sequelize.STRING
                 },
                 firstName: {
                     type: Sequelize.STRING

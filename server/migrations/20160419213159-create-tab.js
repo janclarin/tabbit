@@ -6,11 +6,13 @@ module.exports = {
             'Tab',
             {
                 id: {
+                    allowNull: false,
                     type: Sequelize.INTEGER,
                     primaryKey: true,
                     autoIncrement: true
                 },
                 listId: {
+                    allowNull: false,
                     type: Sequelize.INTEGER,
                     references: {
                         model: 'List',
@@ -18,6 +20,7 @@ module.exports = {
                     }
                 },
                 progressId: {
+                    allowNull: false,
                     type: Sequelize.INTEGER,
                     references: {
                         model: 'TabProgress',
@@ -25,6 +28,7 @@ module.exports = {
                     }
                 },
                 typeId: {
+                    allowNull: false,
                     type: Sequelize.INTEGER,
                     references: {
                         model: 'TabType',

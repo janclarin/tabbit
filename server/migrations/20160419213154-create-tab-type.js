@@ -6,6 +6,7 @@ module.exports = {
             'TabType',
             {
                 id: {
+                    allowNull: false,
                     type: Sequelize.INTEGER,
                     primaryKey: true,
                     autoIncrement: true

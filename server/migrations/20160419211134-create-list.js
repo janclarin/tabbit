@@ -6,11 +6,13 @@ module.exports = {
             'List',
             {
                 id: {
+                    allowNull: false,
                     type: Sequelize.INTEGER,
                     primaryKey: true,
                     autoIncrement: true
                 },
                 ownerId: {
+                    allowNull: false,
                     type: Sequelize.INTEGER,
                     references: {
                         model: 'User',
@@ -18,12 +20,12 @@ module.exports = {
                     }
                 },
                 name: {
-                    type: Sequelize.STRING,
-                    allowNull: false
+                    allowNull: false,
+                    type: Sequelize.STRING
                 },
                 isPrivate: {
-                    type: Sequelize.BOOLEAN,
                     allowNull: false,
+                    type: Sequelize.BOOLEAN,
                     defaultValue: false
                 },
                 createdAt: {
