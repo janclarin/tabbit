@@ -6,8 +6,8 @@ module.exports = {
             'User',
             'isEmailConfirmed',
             {
-                type: Sequelize.BOOLEAN,
                 allowNull: false,
+                type: Sequelize.BOOLEAN,
                 defaultValue: false
             }
         );
