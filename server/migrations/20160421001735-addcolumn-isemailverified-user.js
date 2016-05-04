@@ -4,7 +4,7 @@ module.exports = {
     up: function (queryInterface, Sequelize) {
         return queryInterface.addColumn(
             'User',
-            'isEmailConfirmed',
+            'isEmailVerified',
             {
                 allowNull: false,
                 type: Sequelize.BOOLEAN,
@@ -14,6 +14,6 @@ module.exports = {
     },
 
     down: function (queryInterface, Sequelize) {
-        return queryInterface.removeColumn('User', 'isEmailConfirmed');
+        return queryInterface.removeColumn('User', 'isEmailVerified');
     }
 };
