@@ -4,63 +4,61 @@
 'use strict';
 
 module.exports = function (sequelize, DataTypes) {
-    var User = sequelize.define(
-        'User',
-        {
-            id: {
-                type: DataTypes.INTEGER,
-                primaryKey: true,
-                autoIncrement: true
-            },
-            email: {
-                type: DataTypes.STRING,
-                unique: true,
-                allowNull: false,
-                validate: {
-                    isEmail: true,
-                    isLowercase: true // Ensure that it's lowercase when passed in.
-                }
-            },
-            username: {
-                type: DataTypes.STRING,
-                unique: true,
-                allowNull: false,
-                validate: {
-                    isLowercase: true // Ensure that it's lowercase when passed in.
-                }
-            },
-            password: {
-                type: DataTypes.STRING,
-                allowNull: false
-            },
-            salt: {
-                type: DataTypes.STRING,
-                allowNull: false
-            },
-            firstName: {
-                type: DataTypes.STRING
-            },
-            lastName: {
-                type: DataTypes.STRING
-            },
-            isEmailConfirmed: {
-                type: DataTypes.BOOLEAN,
-                allowNull: false,
-                defaultValue: false
+    var User = sequelize.define('User', {
+        id: {
+            allowNull: false,
+            type: DataTypes.INTEGER,
+            primaryKey: true,
+            autoIncrement: true
+        },
+        email: {
+            allowNull: false,
+            type: DataTypes.STRING,
+            unique: true,
+            validate: {
+                isEmail: true,
+                isLowercase: true // Ensure that it's lowercase when passed in.
             }
-        }, {
-            classMethods: {
-                associate: function (models) {
-                    User.hasMany(models.List, {foreignKey: 'ownerId'});
-                }
-            },
-            instanceMethods: {
-                getFullName: function () {
-                    return [this.firstName, this.lastName].join(' ');
-                }
-            },
-            freezeTableName: true
+        },
+        username: {
+            allowNull: false,
+            type: DataTypes.STRING,
+            unique: true,
+            validate: {
+                isLowercase: true // Ensure that it's lowercase when passed in.
+            }
+        },
+        password: {
+            allowNull: false,
+            type: DataTypes.STRING
+        },
+        salt: {
+            allowNull: false,
+            type: DataTypes.STRING
+        },
+        firstName: {
+            type: DataTypes.STRING
+        },
+        lastName: {
+            type: DataTypes.STRING
+        },
+        isEmailVerified: {
+            allowNull: false,
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
         }
-    );
+    }, {
+        classMethods: {
+            associate: function (models) {
+                User.hasMany(models.List, {foreignKey: 'ownerId'});
+            }
+        },
+        instanceMethods: {
+            getFullName: function () {
+                return [this.firstName, this.lastName].join(' ');
+            }
+        },
+        freezeTableName: true
+    });
     return User;
 };

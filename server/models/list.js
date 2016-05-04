@@ -6,17 +6,18 @@
 module.exports = function(sequelize, DataTypes) {
     var List = sequelize.define('List', {
         id: {
+            allowNull: false,
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true
         },
         name: {
-            type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
+            type: DataTypes.STRING
         },
         isPrivate: {
-            type: DataTypes.BOOLEAN,
             allowNull: false,
+            type: DataTypes.BOOLEAN,
             defaultValue: false
         }
     }, {

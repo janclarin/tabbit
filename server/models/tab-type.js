@@ -6,13 +6,14 @@
 module.exports = function(sequelize, DataTypes) {
     var TabType = sequelize.define('TabType', {
         id: {
+            allowNull: false,
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true
         },
         name: {
-            type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
+            type: DataTypes.STRING
         }
     }, {
         classMethods: {

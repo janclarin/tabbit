@@ -6,13 +6,14 @@
 module.exports = function(sequelize, DataTypes) {
     var Tab = sequelize.define('Tab', {
         id: {
+            allowNull: false,
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true
         },
         songName: {
-            type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
+            type: DataTypes.STRING
         },
         artistName: {
             type: DataTypes.STRING
