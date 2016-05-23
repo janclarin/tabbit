@@ -71,7 +71,7 @@ function getUser(req, res) {
 
     models.User.findById(userId, {
         attributes: [ // Does not include email, name, password, or salt.
-            'id', 'username', 'createdAt', 'updatedAt'
+            'id', 'username', 'isEmailVerified', 'createdAt', 'updatedAt'
         ]
     }).then(function (user) {
         res.status(200).json(user);
