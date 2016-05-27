@@ -1,0 +1,11 @@
+<!-- Verify email directive template -->
+
+<div ng-if="vm.isVisible" class="alert alert-warning" role="alert">
+  <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+  {{ vm.message }}
+  <button type="button" class="btn btn-xs btn-warning pull-right"
+          ng-click="vm.resendVerificationEmail()">
+    {{ vm.buttonText }}
+    <i class="fa fa-paper-plane" aria-hidden="true"></i>
+  </button>
+</div>
