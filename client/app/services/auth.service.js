@@ -16,6 +16,7 @@
         return {
             isLoggedIn: isLoggedIn,
             isAuthorized: isAuthorized,
+            isEmailVerified: isEmailVerified,
             getLoggedInUser: getLoggedInUser,
             getLoggedInUserToken: getLoggedInUserToken,
             setLoggedInUserToken: setLoggedInUserToken,
@@ -66,6 +67,15 @@
          */
         function isLoggedIn() {
             return hasValidToken() && getLoggedInUser();
+        }
+
+        /**
+         * Indicates whether or not the logged user's email is verified. 
+         * @returns {boolean}
+         */
+        function isEmailVerified() {
+            var user = getLoggedInUser();
+            return user.isEmailVerified !== null && user.isEmailVerified;
         }
 
         // TODO: Move this to userService.
